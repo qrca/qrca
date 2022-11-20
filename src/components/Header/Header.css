@@ -1,0 +1,18 @@
+.custom-toolbar {
+  --background: #1c1b1f;
+  --padding-start: 2em;
+  --padding-top: 2em;
+  --padding-end: 2em;
+}
+
+.toolbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-size {
+  height: 50px;
+  width: 50px;
+}

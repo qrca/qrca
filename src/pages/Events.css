@@ -1,0 +1,70 @@
+.custom-background {
+  --background: #1c1b1f;
+}
+
+.content-style {
+  --padding-top: 2em;
+}
+
+ion-fab-button {
+  --background: #302d38;
+  --background-activated: rgb(96, 85, 128, 0.8);
+  --border-radius: 15px;
+  --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --color: #d0bcff;
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+
+/* .custom-toolbar {
+  --background: #1c1b1f;
+  --padding-start: 2em;
+  --padding-top: 2em;
+  --padding-end: 2em;
+}
+
+.toolbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-size {
+  height: 50px;
+  width: 50px;
+} */
+
+/* header
+
+position: absolute;
+width: 346px;
+height: 50px;
+left: 23px;
+top: 29px;
+
+
+
+ Menu 
+
+position: absolute;
+left: 0%;
+right: 91.33%;
+top: 20%;
+bottom: 20%;
+
+background: url(.png);
+
+
+ CS_ACS 1 
+
+position: absolute;
+left: 85.55%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+background: url(CS_ACS), url(CS_ACS), url(CS_ACS), url(CS_ACS); */
