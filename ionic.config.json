@@ -1,0 +1,7 @@
+{
+  "name": "qrca",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

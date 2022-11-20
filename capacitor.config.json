@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "qrca",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
