@@ -1,0 +1,48 @@
+.datetime-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+
+  height: 100vh;
+}
+
+.custom-add-event {
+  --padding-bottom: 2em;
+  --padding-top: 2em;
+  --padding-start: 2em;
+  --padding-end: 2em;
+}
+
+ion-input.custom {
+  z-index: 0;
+}
+.custom-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+  margin-top: 5em;
+}
+
+ion-modal {
+  --background: rgba(28, 27, 31, 0.3);
+}
+
+ion-button {
+  --border-color: transparent;
+  --border-style: solid;
+  --border-width: 1px;
+  --border-radius: 0;
+}
+
+ion-button.add-custom-button {
+  --color: rgba(129, 235, 136, 0.7);
+  --background: rgba(201, 255, 188, 0.05);
+  --color-activated: rgba(201, 255, 188, 0.2);
+  --border-radius: 2em;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
