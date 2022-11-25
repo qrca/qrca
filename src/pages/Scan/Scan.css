@@ -1,0 +1,30 @@
+.custom-subtitle {
+  opacity: 0.5;
+  font-size: 1em;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+}
+
+.custom-scan {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+
+  position: relative;
+  top: 30%;
+  transform: translateY(-50%);
+}
+
+.btn-margin {
+  margin-top: 3em;
+}
+
+.custom-ion-btn {
+  --color: rgb(104, 229, 112, 0.7);
+  --padding-top: 100px;
+  --padding-bottom: 100px;
+  --padding-start: 80px;
+  --padding-end: 80px;
+  --border-radius: 50%;
+}

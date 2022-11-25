@@ -16,11 +16,24 @@ import { pencilOutline } from "ionicons/icons";
 
 import "./Events.css";
 const Events: React.FC = () => {
-  const test_events: Array<string> = [
-    "Event 1",
-    "Event 2",
-    "Event 3",
-    "Event 4",
+  const test_date = new Date();
+  const test_events = [
+    {
+      eventName: "Event 1",
+      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
+    },
+    {
+      eventName: "Event 2",
+      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
+    },
+    {
+      eventName: "Event 3",
+      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
+    },
+    {
+      eventName: "Event 4",
+      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
+    },
   ];
   return (
     <IonPage>
@@ -30,16 +43,16 @@ const Events: React.FC = () => {
           <IonListHeader class="custom-background">
             <IonTitle>Major Events</IonTitle>
           </IonListHeader>
-          {test_events.map((ename: string) => (
-            <EventItem eventName={ename} />
+          {test_events.map(({ eventName }) => (
+            <EventItem eventName={eventName} />
           ))}
         </IonList>
         <IonList lines="none">
           <IonListHeader class="custom-background">
             <IonTitle>Minor Events</IonTitle>
           </IonListHeader>
-          {test_events.map((ename: string) => (
-            <EventItem eventName={ename} />
+          {test_events.map(({ eventName }) => (
+            <EventItem eventName={eventName} />
           ))}
         </IonList>
         <IonFab slot="fixed" horizontal="end" vertical="bottom" edge>

@@ -4,6 +4,7 @@ import { IonReactRouter } from "@ionic/react-router";
 // import { ellipse, square, triangle } from "ionicons/icons";
 import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
+import Scan from "./pages/Scan/Scan";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -26,19 +27,29 @@ import "./theme/variables.css";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/add-event">
-          <AddEvent />
-        </Route>
-        <Route exact path="/">
-          <Events />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const test_date = new Date();
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/scan">
+            <Scan
+              eventName="Event 1"
+              startTime={test_date.getHours() + ":" + test_date.getMinutes()}
+              endTime={test_date.getHours() + ":" + test_date.getMinutes()}
+            />
+          </Route>
+          <Route exact path="/add-event">
+            <AddEvent />
+          </Route>
+          <Route exact path="/">
+            <Events />
+          </Route>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

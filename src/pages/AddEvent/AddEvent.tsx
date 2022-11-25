@@ -7,9 +7,8 @@ import {
   IonSelect,
   IonSelectOption,
   IonButton,
-  IonLabel,
 } from "@ionic/react";
-import { useState } from "react";
+// import { useState } from "react";
 
 import Header from "../../components/Header/Header";
 import "./AddEvent.css";
