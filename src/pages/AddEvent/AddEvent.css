@@ -15,9 +15,12 @@
   --padding-end: 2em;
 }
 
-ion-input.custom {
-  z-index: 0;
+ion-item {
+  --inline-padding-start: 26px;
+  border: hsl(0, 0%, 70%) 1px solid;
+  border-radius: 5px;
 }
+
 .custom-list {
   display: flex;
   flex-direction: column;
@@ -45,4 +48,8 @@ ion-button.add-custom-button {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.ion-add-custom-button {
+  border: none;
 }
