@@ -2,8 +2,10 @@
   --background: #1c1b1f;
 }
 
-.content-style {
-  --padding-top: 2em;
+.center-events {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 ion-fab-button {

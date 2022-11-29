@@ -10,7 +10,6 @@ import {
 } from "@ionic/react";
 // import { useState } from "react";
 
-import Header from "../../components/Header/Header";
 import "./AddEvent.css";
 
 const AddEvent = () => {
@@ -22,7 +21,6 @@ const AddEvent = () => {
 
   return (
     <IonPage>
-      <Header />
       <IonContent class="custom-add-event">
         <IonList class="custom-list">
           <h1>Add Event</h1>

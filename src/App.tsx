@@ -1,6 +1,7 @@
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import Header from "./components/Header/Header";
 // import { ellipse, square, triangle } from "ionicons/icons";
 import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
@@ -31,6 +32,7 @@ const App: React.FC = () => {
   const test_date = new Date();
   return (
     <IonApp>
+      <Header />
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/scan">
