@@ -1,4 +1,5 @@
 import { IonText, IonButton } from "@ionic/react";
+import { Link } from "react-router-dom";
 import "./EventItem.css";
 
 const EventItem = ({ eventName }: { eventName: string }) => {
@@ -9,7 +10,9 @@ const EventItem = ({ eventName }: { eventName: string }) => {
       </IonText>
       <div className="line"></div>
       <IonButton>
-        <span className="font-style">Scan</span>
+        <Link to="/scan">
+          <span className="font-style">Scan</span>
+        </Link>
       </IonButton>
     </div>
   );

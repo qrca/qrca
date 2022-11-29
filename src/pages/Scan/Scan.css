@@ -22,9 +22,32 @@
 
 .custom-ion-btn {
   --color: rgb(104, 229, 112, 0.7);
-  --padding-top: 100px;
+  /* --padding-top: 100px;
   --padding-bottom: 100px;
   --padding-start: 80px;
   --padding-end: 80px;
-  --border-radius: 50%;
+  --border-radius: 50%; */
+}
+
+.hideBg::part(background) {
+  opacity: 0;
+}
+
+.scan-box {
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  display: block;
+  left: 50%;
+  height: 70vw;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+}
+
+.stop-btn {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
 }
