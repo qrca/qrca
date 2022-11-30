@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -6,6 +7,7 @@ import Header from "./components/Header/Header";
 import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Scan from "./pages/Scan/Scan";
+import Login from "./components/Login/Login";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -30,9 +32,11 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const test_date = new Date();
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <IonApp>
-      <Header />
+      <Header setShowLogin={setShowLogin} />
+      <Login show={showLogin} />
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/scan">

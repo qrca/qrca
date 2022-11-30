@@ -3,6 +3,7 @@
   --padding-start: 2em;
   --padding-top: 2em;
   --padding-end: 2em;
+  --padding-bottom: 2em;
 }
 
 .toolbar-container {
@@ -15,4 +16,8 @@
 .img-size {
   height: 50px;
   width: 50px;
+}
+
+ion-header {
+  z-index: 1000;
 }
