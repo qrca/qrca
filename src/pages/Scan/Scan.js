@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export default function Scan({ eventName, startTime, endTime }) {
   const [hideBg, setHideBg] = useState("");
-  const [hideBox, setHideBox] = useState("hideBox");
   useEffect(() => {
     const checkPermission = async () => {
       const status = await BarcodeScanner.checkPermission({ force: true });
@@ -22,19 +21,15 @@ export default function Scan({ eventName, startTime, endTime }) {
 
   const startScan = async () => {
     // Check camera permission
-    // This is just a simple example, check out the better checks below
     await BarcodeScanner.checkPermission({ force: true });
     setHideBg("hideBg");
-    setHideBox("");
 
     // make background of WebView transparent
-    // note: if you are using ionic this might not be enough, check below
     BarcodeScanner.hideBackground();
     document.querySelector("body").classList.add("scanner-active");
 
     const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
     stopScan();
-    setHideBox("hideBox");
 
     // if the result has content
     if (result.hasContent) {
@@ -46,7 +41,6 @@ export default function Scan({ eventName, startTime, endTime }) {
     BarcodeScanner.showBackground();
     BarcodeScanner.stopScan();
     setHideBg("");
-    setHideBox("hideBox");
     document.querySelector("body").classList.remove("scanner-active");
   };
 

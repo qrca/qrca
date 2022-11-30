@@ -8,7 +8,6 @@ import {
   IonSelectOption,
   IonButton,
 } from "@ionic/react";
-// import { useState } from "react";
 
 import "./AddEvent.css";
 
@@ -16,8 +15,6 @@ const AddEvent = () => {
   const getTime = (e: any) => {
     console.log(e.target.value);
   };
-
-  // const d;
 
   return (
     <IonPage>
