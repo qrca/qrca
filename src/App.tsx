@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Scan from "./pages/Scan/Scan";
+import EventList from "./pages/EventList/EventList";
 import Login from "./components/Login/Login";
 
 /* Core CSS required for Ionic components to work properly */
@@ -39,7 +40,10 @@ const App: React.FC = () => {
       <Login show={showLogin} />
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="/scan">
+          <Route path="/event-list">
+            <EventList />
+          </Route>
+          <Route path="/scan">
             <Scan
               eventName="Event 1"
               startTime={test_date.getHours() + ":" + test_date.getMinutes()}
