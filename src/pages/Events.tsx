@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   IonContent,
   IonPage,
@@ -55,9 +56,12 @@ const Events: React.FC = () => {
             ))}
           </IonList>
         </div>
+
         <IonFab slot="fixed" horizontal="end" vertical="bottom" edge>
           <IonFabButton>
-            <IonIcon icon={pencilOutline}></IonIcon>
+            <Link to="/add-event">
+              <IonIcon icon={pencilOutline}></IonIcon>
+            </Link>
           </IonFabButton>
         </IonFab>
       </IonContent>

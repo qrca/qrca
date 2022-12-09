@@ -10,7 +10,7 @@ const EventItem = ({ eventName }: { eventName: string }) => {
       </IonText>
       <div className="line"></div>
       <IonButton>
-        <Link to="/scan">
+        <Link to="/scan" className="link">
           <span className="font-style">Scan</span>
         </Link>
       </IonButton>
