@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
+import axios from "axios";
 import Header from "./components/Header/Header";
 // import { ellipse, square, triangle } from "ionicons/icons";
 import Events from "./pages/Events";
@@ -32,8 +33,21 @@ import "./theme/variables.css";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const test_date = new Date();
   const [showLogin, setShowLogin] = useState(false);
+  const [events, setEvents] = useState([]);
+
+  const baseUrl = "http://localhost:3001";
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const serverEvents = await axios.get(`${baseUrl}/api/events`);
+      setEvents(serverEvents.data);
+      console.log(serverEvents.data);
+    };
+
+    getEvents();
+  }, []);
+
   return (
     <IonApp>
       <Header setShowLogin={setShowLogin} />
@@ -43,12 +57,8 @@ const App: React.FC = () => {
           <Route path="/event-list">
             <EventList />
           </Route>
-          <Route path="/scan">
-            <Scan
-              eventName="Event 1"
-              startTime={test_date.getHours() + ":" + test_date.getMinutes()}
-              endTime={test_date.getHours() + ":" + test_date.getMinutes()}
-            />
+          <Route path="/scan/:id">
+            <Scan eventInfo={events} />
           </Route>
           <Route exact path="/add-event">
             <AddEvent />

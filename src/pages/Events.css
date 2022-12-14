@@ -20,3 +20,8 @@ ion-fab-button {
 ion-toolbar {
   --background: transparent;
 }
+
+ion-refresher {
+  position: relative;
+  z-index: 1000;
+}

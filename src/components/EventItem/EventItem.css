@@ -38,6 +38,7 @@ ion-button {
 }
 
 .font-style {
+  /* outline: solid 1px red; */
   font-family: "Inter", sans-serif;
 }
 

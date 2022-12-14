@@ -10,50 +10,72 @@ import {
   IonIcon,
   IonFooter,
   IonToolbar,
+  IonRefresher,
+  IonRefresherContent,
+  RefresherEventDetail,
 } from "@ionic/react";
 import EventItem from "../components/EventItem/EventItem";
 import { pencilOutline } from "ionicons/icons";
+import axios from "axios";
 
 import "./Events.css";
+import { useEffect, useState } from "react";
+
+const baseUrl = "http://localhost:3001";
+
 const Events: React.FC = () => {
-  const test_date = new Date();
-  const test_events = [
-    {
-      eventName: "Event 1",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-    },
-    {
-      eventName: "Event 2",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-    },
-    {
-      eventName: "Event 3",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-    },
-    {
-      eventName: "Event 4",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-    },
-  ];
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const getEvents = async () => {
+      const serverEvents = await axios.get(`${baseUrl}/api/events`);
+      setEvents(serverEvents.data);
+      console.log(serverEvents.data);
+    };
+
+    getEvents();
+  }, []);
+
+  const onRefresh = (e: CustomEvent<RefresherEventDetail>) => {
+    setTimeout(async () => {
+      const serverEvents = await axios.get(`${baseUrl}/api/events`);
+      setEvents(serverEvents.data);
+      e.detail.complete();
+    }, 1000);
+  };
   return (
     <IonPage>
       <IonContent fullscreen class="content-style">
+        <IonRefresher
+          slot="fixed"
+          pullFactor={0.5}
+          pullMin={100}
+          pullMax={200}
+          onIonRefresh={onRefresh}
+        >
+          <IonRefresherContent
+            refreshingSpinner={"bubbles"}
+          ></IonRefresherContent>
+        </IonRefresher>
         <div className="center-events">
           <IonList lines="none">
             <IonListHeader class="custom-background">
               <IonTitle>Major Events</IonTitle>
             </IonListHeader>
-            {test_events.map(({ eventName }) => (
-              <EventItem eventName={eventName} />
-            ))}
+            {events
+              .filter((e: any) => e.eventType === "major")
+              .map((eventInfo) => (
+                <EventItem eventInfo={eventInfo} />
+              ))}
           </IonList>
           <IonList lines="none">
             <IonListHeader class="custom-background">
               <IonTitle>Minor Events</IonTitle>
             </IonListHeader>
-            {test_events.map(({ eventName }) => (
-              <EventItem eventName={eventName} />
-            ))}
+            {events
+              .filter((e: any) => e.eventType === "minor")
+              .map((eventInfo) => (
+                <EventItem eventInfo={eventInfo} />
+              ))}
           </IonList>
         </div>
 

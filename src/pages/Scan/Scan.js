@@ -1,10 +1,15 @@
 import { IonPage, IonContent, IonButton } from "@ionic/react";
 import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
+import { useParams } from "react-router";
+import Moment from "react-moment";
 
 import "./Scan.css";
 import { useEffect, useState } from "react";
 
-export default function Scan({ eventName, startTime, endTime }) {
+export default function Scan({ eventInfo }) {
+  let { id } = useParams();
+  const event = eventInfo.filter((e) => e.id === id)[0];
+
   const [hideBg, setHideBg] = useState("");
   useEffect(() => {
     const checkPermission = async () => {
@@ -48,9 +53,10 @@ export default function Scan({ eventName, startTime, endTime }) {
     <IonPage>
       <IonContent className="hideBg" hidden={!!hideBg}>
         <div className="custom-scan">
-          <h1>{eventName}</h1>
+          <h1>{event.eventName}</h1>
           <h3 className="custom-subtitle">
-            Time: {startTime} - {endTime}
+            Time: <Moment format="hh:mm a">{event.startTime}</Moment> -{" "}
+            <Moment format="hh:mm a">{event.endTime}</Moment>
           </h3>
           <div className="btn-margin">
             <IonButton class="custom-ion-btn" onClick={startScan}>

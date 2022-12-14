@@ -2,15 +2,15 @@ import { IonText, IonButton } from "@ionic/react";
 import { Link } from "react-router-dom";
 import "./EventItem.css";
 
-const EventItem = ({ eventName }: { eventName: string }) => {
+const EventItem = ({ eventInfo }: { eventInfo: any }) => {
   return (
     <div className="item-style">
       <IonText>
-        <span className="font-style light-font">{eventName}</span>
+        <div className="font-style light-font">{eventInfo.eventName}</div>
       </IonText>
-      <div className="line"></div>
+      {/* <div className="line"></div> */}
       <IonButton>
-        <Link to="/scan" className="link">
+        <Link to={`/scan/${eventInfo.id}`} className="link">
           <span className="font-style">Scan</span>
         </Link>
       </IonButton>
