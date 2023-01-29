@@ -9,47 +9,36 @@ import {
   IonSegmentButton,
   IonLabel,
 } from "@ionic/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Moment from "react-moment";
 
 import "./EventList.css";
 
 export default function EventList() {
-  const test_date = new Date();
   const [showEventType, setEventType] = useState("major");
-  const test_events = [
-    {
-      eventName: "Event 1",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      endTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      date: "Nov 2, 1999",
-      eventType: "major",
-    },
-    {
-      eventName: "Event 2",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      endTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      date: "Nov 2, 1999",
-      eventType: "major",
-    },
-    {
-      eventName: "Event 3",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      endTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      date: "Nov 2, 1999",
-      eventType: "minor",
-    },
-    {
-      eventName: "Event 4",
-      startTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      endTime: test_date.getHours() + ":" + test_date.getMinutes(),
-      date: "Nov 2, 1999",
-      eventType: "minor",
-    },
-  ];
+
+  const [events, setEvents] = useState<any[]>([]);
+
+  const baseUrl = "http://localhost:3001";
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const serverEvents = await axios.get(`${baseUrl}/api/events`);
+      setEvents(serverEvents.data);
+    };
+
+    getEvents();
+  }, []);
+  console.log(events);
 
   const test_func = (e: any) => {
     setEventType(e.target.value);
   };
+  if (events.length === 0) {
+    return <></>;
+  }
+
   return (
     <IonPage className="custom-event-list">
       <IonContent>
@@ -62,7 +51,7 @@ export default function EventList() {
           </IonSegmentButton>
         </IonSegment>
         <div className="ion-margin-top">
-          {test_events
+          {events
             .filter((e) => e.eventType === showEventType)
             .map((e, i) => (
               <div key={i}>
@@ -73,9 +62,8 @@ export default function EventList() {
                     </IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>
-                    <p className="ion-text-center">Date: {e.date}</p>
                     <p className="ion-text-center">
-                      Time: {e.startTime} - {e.endTime}
+                      Date: <Moment format="MMM DD, YYYY">{e.date}</Moment>
                     </p>
                   </IonCardContent>
                 </IonCard>

@@ -1,5 +1,6 @@
 .custom-background {
   --background: #1c1b1f;
+  --border: none;
 }
 
 .center-events {
