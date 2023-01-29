@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  setupIonicReact,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import axios from "axios";
 import Header from "./components/Header/Header";
@@ -9,7 +18,7 @@ import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Scan from "./pages/Scan/Scan";
 import EventList from "./pages/EventList/EventList";
-import Login from "./components/Login/Login";
+import { calendar, cardOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -33,7 +42,6 @@ import "./theme/variables.css";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [showLogin, setShowLogin] = useState(false);
   const [events, setEvents] = useState([]);
 
   const baseUrl = "http://localhost:3001";
@@ -50,23 +58,46 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <Header setShowLogin={setShowLogin} />
-      <Login show={showLogin} />
+      <Header />
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/event-list">
-            <EventList />
-          </Route>
-          <Route path="/scan/:id">
-            <Scan eventInfo={events} />
-          </Route>
-          <Route exact path="/add-event">
-            <AddEvent />
-          </Route>
-          <Route exact path="/">
-            <Events />
-          </Route>
-        </IonRouterOutlet>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/event-list">
+              <EventList />
+            </Route>
+            <Route path="/scan/:id">
+              <Scan eventInfo={events} />
+            </Route>
+            <Route exact path="/add-event">
+              <AddEvent />
+            </Route>
+            <Route exact path="/">
+              <Events />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom" class="custom-background">
+            <IonTabButton href="/" tab="events">
+              <IonIcon icon={calendar} aria-hidden="true" />
+              <IonLabel>Events</IonLabel>
+              {/* <IonBadge>6</IonBadge> */}
+            </IonTabButton>
+
+            <IonTabButton href="/event-list" tab="fines">
+              <IonIcon icon={cardOutline} aria-hidden="true" />
+              <IonLabel>Fines</IonLabel>
+            </IonTabButton>
+
+            {/* <IonTabButton tab="map">
+              <IonIcon icon={map} aria-hidden="true" />
+              <IonLabel>Map</IonLabel>
+            </IonTabButton> */}
+
+            {/* <IonTabButton tab="about">
+              <IonIcon icon={informationCircle} aria-hidden="true" />
+              <IonLabel>About</IonLabel>
+            </IonTabButton> */}
+          </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
   );
