@@ -18,6 +18,7 @@ import Events from "./pages/Events";
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Scan from "./pages/Scan/Scan";
 import EventList from "./pages/EventList/EventList";
+import Fines from "./pages/Fines/Fines";
 import { calendar, cardOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -62,6 +63,9 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
+            <Route exact path="/fines/:id">
+              <Fines />
+            </Route>
             <Route path="/event-list">
               <EventList />
             </Route>

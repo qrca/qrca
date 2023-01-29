@@ -9,7 +9,7 @@ const EventItem = ({ eventInfo }: { eventInfo: any }) => {
         <div className="font-style light-font">{eventInfo.eventName}</div>
       </IonText>
       {/* <div className="line"></div> */}
-      <IonButton>
+      <IonButton class="custom-ion-btn">
         <Link to={`/scan/${eventInfo.id}`} className="link">
           <span className="font-style">Scan</span>
         </Link>

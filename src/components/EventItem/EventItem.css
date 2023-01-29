@@ -21,7 +21,7 @@ ion-item {
   background-color: #82af86;
 }
 
-ion-button {
+.custom-ion-btn {
   --color: white;
 
   --background: #1c1b1f;
