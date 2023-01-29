@@ -14,6 +14,7 @@ import {
   IonRefresherContent,
   RefresherEventDetail,
 } from "@ionic/react";
+
 import EventItem from "../components/EventItem/EventItem";
 import { pencilOutline } from "ionicons/icons";
 import axios from "axios";
@@ -42,6 +43,7 @@ const Events: React.FC = () => {
       e.detail.complete();
     }, 1000);
   };
+
   return (
     <IonPage>
       <IonContent fullscreen class="content-style">
@@ -63,8 +65,8 @@ const Events: React.FC = () => {
             </IonListHeader>
             {events
               .filter((e: any) => e.eventType === "major")
-              .map((eventInfo) => (
-                <EventItem eventInfo={eventInfo} />
+              .map((eventInfo, i) => (
+                <EventItem key={i} eventInfo={eventInfo} />
               ))}
           </IonList>
           <IonList lines="none">
@@ -73,8 +75,8 @@ const Events: React.FC = () => {
             </IonListHeader>
             {events
               .filter((e: any) => e.eventType === "minor")
-              .map((eventInfo) => (
-                <EventItem eventInfo={eventInfo} />
+              .map((eventInfo, i) => (
+                <EventItem key={i} eventInfo={eventInfo} />
               ))}
           </IonList>
         </div>
