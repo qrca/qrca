@@ -9,13 +9,14 @@ import {
   IonTabButton,
   IonIcon,
   IonLabel,
+  IonNav,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import axios from "axios";
-import Header from "./components/Header/Header";
-// import { ellipse, square, triangle } from "ionicons/icons";
-import Events from "./pages/Events";
+
 import AddEvent from "./pages/AddEvent/AddEvent";
+import Header from "./components/Header/Header";
+import Events from "./pages/Events";
 import Scan from "./pages/Scan/Scan";
 import EventList from "./pages/EventList/EventList";
 import Fines from "./pages/Fines/Fines";
@@ -45,7 +46,8 @@ setupIonicReact();
 const App: React.FC = () => {
   const [events, setEvents] = useState([]);
 
-  const baseUrl = "http://localhost:3001";
+  // const baseUrl = "http://localhost:3001";
+  const baseUrl = "http://192.168.1.9:3001";
 
   useEffect(() => {
     const getEvents = async () => {
@@ -67,7 +69,7 @@ const App: React.FC = () => {
               <Fines />
             </Route>
             <Route path="/event-list">
-              <EventList />
+              <IonNav root={() => <EventList />}></IonNav>
             </Route>
             <Route path="/scan/:id">
               <Scan eventInfo={events} />
@@ -83,23 +85,12 @@ const App: React.FC = () => {
             <IonTabButton href="/" tab="events">
               <IonIcon icon={calendar} aria-hidden="true" />
               <IonLabel>Events</IonLabel>
-              {/* <IonBadge>6</IonBadge> */}
             </IonTabButton>
 
             <IonTabButton href="/event-list" tab="fines">
               <IonIcon icon={cardOutline} aria-hidden="true" />
               <IonLabel>Fines</IonLabel>
             </IonTabButton>
-
-            {/* <IonTabButton tab="map">
-              <IonIcon icon={map} aria-hidden="true" />
-              <IonLabel>Map</IonLabel>
-            </IonTabButton> */}
-
-            {/* <IonTabButton tab="about">
-              <IonIcon icon={informationCircle} aria-hidden="true" />
-              <IonLabel>About</IonLabel>
-            </IonTabButton> */}
           </IonTabBar>
         </IonTabs>
       </IonReactRouter>

@@ -8,6 +8,10 @@ import {
   IonSelectOption,
   IonButton,
   IonLabel,
+  IonBackButton,
+  IonToolbar,
+  IonHeader,
+  IonButtons,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -16,7 +20,8 @@ import { useHistory } from "react-router-dom";
 
 import "./AddEvent.css";
 
-const baseUrl = "http://localhost:3001";
+// const baseUrl = "http://localhost:3001";
+const baseUrl = "http://192.168.1.9:3001";
 
 const AddEvent = () => {
   let history = useHistory();
@@ -54,105 +59,115 @@ const AddEvent = () => {
   };
 
   return (
-    <IonPage>
-      <IonContent class="custom-add-event">
-        <IonList class="custom-list">
-          <h1>Add Event</h1>
-          <IonItem>
-            <IonSelect
-              interface="action-sheet"
-              placeholder="Select event type"
-              onIonChange={(e: any) => setEventType(e.target.value)}
-            >
-              <IonSelectOption value="major">Major</IonSelectOption>
-              <IonSelectOption value="minor">Minor</IonSelectOption>
-            </IonSelect>
-          </IonItem>
-          <IonItem>
-            <IonInput
-              placeholder="Enter event name"
-              onIonChange={(e: any) => setEventName(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonInput
-              placeholder="Date"
-              type="date"
-              onIonChange={(e: any) => setDate(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Login 1:</IonLabel>
-            <IonInput
-              placeholder="Start time"
-              type="time"
-              onIonChange={(e: any) => setIn1(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Login End 1:</IonLabel>
-            <IonInput
-              placeholder="End time"
-              type="time"
-              onIonChange={(e: any) => setInEnd1(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Login 2:</IonLabel>
-            <IonInput
-              placeholder="Start time"
-              type="time"
-              onIonChange={(e: any) => setIn2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Login End 2:</IonLabel>
-            <IonInput
-              placeholder="End time"
-              type="time"
-              onIonChange={(e: any) => setInEnd2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Logout 1:</IonLabel>
-            <IonInput
-              placeholder="Start time"
-              type="time"
-              onIonChange={(e: any) => setOut1(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Logout End 1:</IonLabel>
-            <IonInput
-              placeholder="End time"
-              type="time"
-              onIonChange={(e: any) => setOutEnd1(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Logout 2:</IonLabel>
-            <IonInput
-              placeholder="Start time"
-              type="time"
-              onIonChange={(e: any) => setOut2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Logout End 2:</IonLabel>
-            <IonInput
-              placeholder="End time"
-              type="time"
-              onIonChange={(e: any) => setOutEnd2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem class="ion-add-custom-button">
-            <IonButton class="add-custom-button" onClick={onSubmit}>
-              Submit
-            </IonButton>
-          </IonItem>
-        </IonList>
-      </IonContent>
-    </IonPage>
+    <>
+      <IonHeader class="back-button-background">
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonPage>
+        <IonContent class="custom-add-event">
+          <IonList class="custom-list">
+            <h1>Add Event</h1>
+            <IonItem>
+              <IonSelect
+                interface="action-sheet"
+                placeholder="Select event type"
+                onIonChange={(e: any) => setEventType(e.target.value)}
+              >
+                <IonSelectOption value="major">Major</IonSelectOption>
+                <IonSelectOption value="minor">Minor</IonSelectOption>
+              </IonSelect>
+            </IonItem>
+            <IonItem>
+              <IonInput
+                placeholder="Enter event name"
+                onIonChange={(e: any) => setEventName(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Date:</IonLabel>
+              <IonInput
+                placeholder="Date"
+                type="date"
+                onIonChange={(e: any) => setDate(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Login 1:</IonLabel>
+              <IonInput
+                placeholder="Start time"
+                type="time"
+                onIonChange={(e: any) => setIn1(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Login End 1:</IonLabel>
+              <IonInput
+                placeholder="End time"
+                type="time"
+                onIonChange={(e: any) => setInEnd1(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Login 2:</IonLabel>
+              <IonInput
+                placeholder="Start time"
+                type="time"
+                onIonChange={(e: any) => setIn2(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Login End 2:</IonLabel>
+              <IonInput
+                placeholder="End time"
+                type="time"
+                onIonChange={(e: any) => setInEnd2(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Logout 1:</IonLabel>
+              <IonInput
+                placeholder="Start time"
+                type="time"
+                onIonChange={(e: any) => setOut1(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Logout End 1:</IonLabel>
+              <IonInput
+                placeholder="End time"
+                type="time"
+                onIonChange={(e: any) => setOutEnd1(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Logout 2:</IonLabel>
+              <IonInput
+                placeholder="Start time"
+                type="time"
+                onIonChange={(e: any) => setOut2(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Logout End 2:</IonLabel>
+              <IonInput
+                placeholder="End time"
+                type="time"
+                onIonChange={(e: any) => setOutEnd2(e.target.value)}
+              ></IonInput>
+            </IonItem>
+            <IonItem class="ion-add-custom-button">
+              <IonButton class="add-custom-button" onClick={onSubmit}>
+                Submit
+              </IonButton>
+            </IonItem>
+          </IonList>
+        </IonContent>
+      </IonPage>
+    </>
   );
 };
 

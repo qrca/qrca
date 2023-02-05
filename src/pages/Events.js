@@ -19,20 +19,11 @@ import { pencilOutline } from "ionicons/icons";
 import axios from "axios";
 
 import "./Events.css";
-import { useEffect } from "react";
 
-const baseUrl = "http://localhost:3001";
+// const baseUrl = "http://localhost:3001";
+const baseUrl = "http://192.168.1.9:3001";
 
 const Events = ({ events, setEvents }) => {
-  useEffect(() => {
-    const getEvents = async () => {
-      const serverEvents = await axios.get(`${baseUrl}/api/events`);
-      setEvents(serverEvents.data);
-    };
-
-    getEvents();
-  }, []);
-
   const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await axios.get(`${baseUrl}/api/events`);
@@ -78,16 +69,14 @@ const Events = ({ events, setEvents }) => {
               })}
           </IonList>
         </div>
-
         <IonFab slot="fixed" horizontal="end" vertical="bottom" edge>
           <IonFabButton>
-            <Link to="/add-event">
+            <Link to={"/add-event"}>
               <IonIcon icon={pencilOutline}></IonIcon>
             </Link>
           </IonFabButton>
         </IonFab>
       </IonContent>
-
       <IonFooter className="ion-no-border">
         <IonToolbar></IonToolbar>
       </IonFooter>

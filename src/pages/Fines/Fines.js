@@ -18,7 +18,8 @@ import axios from "axios";
 import "./Fines.css";
 import moment from "moment";
 
-const baseUrl = "http://localhost:3001/api/events/";
+// const baseUrl = "http://localhost:3001/api/events/";
+const baseUrl = "http://192.168.1.9:3001/api/events/";
 
 export default function Fines() {
   let { id } = useParams();
@@ -44,6 +45,17 @@ export default function Fines() {
       let fine2 = 0;
       let fine3 = 0;
       let fine4 = 0;
+
+      if (s.isExcused) {
+        return {
+          ...s,
+          fine,
+          fine1: 0,
+          fine2: 0,
+          fine3: 0,
+          fine4: 0,
+        };
+      }
 
       if (
         s.login1 === null &&

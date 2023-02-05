@@ -6,24 +6,55 @@ import {
   IonItem,
   IonSelect,
   IonSelectOption,
+  useIonToast,
 } from "@ionic/react";
-import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
+import {
+  BarcodeScanner,
+  SupportedFormat,
+} from "@capacitor-community/barcode-scanner";
 import { useParams } from "react-router";
 import Moment from "react-moment";
+import moment from "moment";
 import "moment-timezone";
 import axios from "axios";
 
 import "./Scan.css";
 import { useEffect, useState } from "react";
 
-const base_url = "http://localhost:3001/api/events/";
+// const baseUrl = "http://localhost:3001/api/events/";
+const baseUrl = "http://192.168.1.9:3001/api/events/";
+
+const logStudent = async (eventId, data) => {
+  await axios.put(baseUrl + eventId, data);
+};
 
 export default function Scan({ eventInfo }) {
   let { id } = useParams();
   const event = eventInfo.filter((e) => e.id === id)[0];
-  console.log("eventinfo", eventInfo);
 
   const [hideBg, setHideBg] = useState("");
+  const [logCat, setLogCat] = useState("");
+  const [present] = useIonToast();
+
+  const presentToast = (
+    student,
+    message = "Please select a timeframe to log first."
+  ) => {
+    if (student === "") {
+      present({
+        message,
+        duration: 1500,
+        position: "bottom",
+      });
+    } else {
+      present({
+        message: `${student} has been logged.`,
+        duration: 1500,
+        position: "bottom",
+      });
+    }
+  };
+
   useEffect(() => {
     const checkPermission = async () => {
       const status = await BarcodeScanner.checkPermission({ force: true });
@@ -43,20 +74,83 @@ export default function Scan({ eventInfo }) {
 
   const startScan = async () => {
     // Check camera permission
-    await BarcodeScanner.checkPermission({ force: true });
+    const status = await BarcodeScanner.checkPermission({ force: true });
+    if (status.denied) {
+      // the user denied permission for good
+      // redirect user to app settings if they want to grant it anyway
+      // eslint-disable-next-line no-restricted-globals
+      const c = confirm(
+        "If you want to grant permission for using your camera, enable it in the app settings."
+      );
+      if (c) {
+        BarcodeScanner.openAppSettings();
+      }
+    }
     setHideBg("hideBg");
 
     // make background of WebView transparent
     BarcodeScanner.hideBackground();
     document.querySelector("body").classList.add("scanner-active");
 
-    const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
-    stopScan();
+    // const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+    // // stopScan();
 
-    // if the result has content
-    if (result.hasContent) {
-      console.log(result.content); // log the raw scanned content
-    }
+    // // if the result has content
+    // if (result.hasContent) {
+    //   console.log(result.content); // log the raw scanned content
+    // }
+
+    const test = await BarcodeScanner.startScanning(
+      { targetedFormats: [SupportedFormat.QR_CODE] },
+      (result) => {
+        BarcodeScanner.pauseScanning();
+        const name = result.content.split("~")[1];
+        const studentId = result.content.split("~")[0].trim();
+        const logTime = moment().toISOString();
+        if (logCat === "") {
+          presentToast("");
+        } else if (logCat === "login1") {
+          const data = {
+            studentId,
+            login1: logTime,
+          };
+          console.log(data);
+          logStudent(id, data);
+
+          presentToast(name);
+        } else if (logCat === "login2") {
+          const data = {
+            studentId,
+            login2: logTime,
+          };
+          console.log(data);
+          logStudent(id, data);
+
+          presentToast(name);
+        } else if (logCat === "logout1") {
+          const data = {
+            studentId,
+            logout1: logTime,
+          };
+          console.log(data);
+          logStudent(id, data);
+
+          presentToast(name);
+        } else if (logCat === "logout2") {
+          const data = {
+            studentId,
+            logout2: logTime,
+          };
+          console.log(data);
+          logStudent(id, data);
+
+          presentToast(name);
+        }
+        setTimeout(1500);
+        BarcodeScanner.resumeScanning();
+      }
+    );
+    console.log(test);
   };
 
   const stopScan = () => {
@@ -73,20 +167,23 @@ export default function Scan({ eventInfo }) {
           <h1>{event.eventName}</h1>
           <IonList>
             <IonItem>
-              <IonSelect placeholder="Select time">
-                <IonSelectOption value={event.in1}>
+              <IonSelect
+                placeholder="Select time"
+                onIonChange={(e) => setLogCat(e.target.value)}
+              >
+                <IonSelectOption value="login1">
                   <Moment format="hh:mm a">{event.in1}</Moment> -{" "}
                   <Moment format="hh:mm a">{event.inEnd1}</Moment>
                 </IonSelectOption>
-                <IonSelectOption value={event.in2}>
+                <IonSelectOption value="login2">
                   <Moment format="hh:mm a">{event.in2}</Moment> -{" "}
                   <Moment format="hh:mm a">{event.inEnd2}</Moment>
                 </IonSelectOption>
-                <IonSelectOption value={event.out1}>
+                <IonSelectOption value="logout1">
                   <Moment format="hh:mm a">{event.out1}</Moment> -{" "}
                   <Moment format="hh:mm a">{event.outEnd1}</Moment>
                 </IonSelectOption>
-                <IonSelectOption value={event.out2}>
+                <IonSelectOption value="logout2">
                   <Moment format="hh:mm a">{event.out2}</Moment> -{" "}
                   <Moment format="hh:mm a">{event.outEnd2}</Moment>
                 </IonSelectOption>
