@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   IonPage,
   IonContent,
@@ -15,11 +15,11 @@ import {
   IonList,
 } from "@ionic/react";
 import { useParams } from "react-router";
-import axios from "axios";
+// import axios from "axios";
 import "./Fines.css";
 import moment from "moment";
 
-const baseUrl = "https://qrca-api.onrender.com/api/events/";
+// const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
 
 export default function Fines({ events }) {
