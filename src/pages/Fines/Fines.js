@@ -87,7 +87,9 @@ export default function Fines() {
         };
       }
 
-      if (s.login1 === null) {
+      if (event.in1 === null) {
+        fine1 = 0;
+      } else if (s.login1 === null) {
         if (s.student.isOfficer) {
           fine1 += 70;
         }
@@ -104,8 +106,9 @@ export default function Fines() {
           }
         }
       }
-
-      if (s.login2 === null) {
+      if (event.in2 === null) {
+        fine2 = 0;
+      } else if (s.login2 === null) {
         if (s.student.isOfficer) {
           fine2 += 70;
         }
@@ -122,7 +125,9 @@ export default function Fines() {
         }
       }
 
-      if (s.logout1 === null) {
+      if (event.out1 === null) {
+        fine3 = 0;
+      } else if (s.logout1 === null) {
         if (s.student.isOfficer) {
           fine3 += 70;
         }
@@ -139,7 +144,9 @@ export default function Fines() {
         }
       }
 
-      if (s.logout2 === null) {
+      if (event.out2 === null) {
+        fine4 = 0;
+      } else if (s.logout2 === null) {
         if (s.student.isOfficer) {
           fine4 += 70;
         }
@@ -180,6 +187,8 @@ export default function Fines() {
     return <></>;
   }
 
+  // const t1 = event.in1 === null : "N/A" ? s.fine1;
+
   return (
     <IonPage>
       <IonContent>
@@ -211,10 +220,14 @@ export default function Fines() {
                           <IonLabel>Fine Breakdown</IonLabel>
                         </IonItem>
                         <div className="ion-padding" slot="content">
-                          <p>Login 1: {s.fine1}</p>
-                          <p>Login 2: {s.fine2}</p>
-                          <p>Logout 1: {s.fine3}</p>
-                          <p>Logout 2: {s.fine4}</p>
+                          <p>Login 1: {event.in1 !== null ? s.fine1 : "N/A"}</p>
+                          <p>Login 2: {event.in2 !== null ? s.fine1 : "N/A"}</p>
+                          <p>
+                            Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
+                          </p>
+                          <p>
+                            Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
+                          </p>
                         </div>
                       </IonAccordion>
                     </IonAccordionGroup>

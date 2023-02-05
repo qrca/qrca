@@ -8,6 +8,8 @@ import {
   IonSegment,
   IonSegmentButton,
   IonLabel,
+  IonRefresher,
+  IonRefresherContent,
 } from "@ionic/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -33,6 +35,14 @@ export default function EventList() {
     getEvents();
   }, []);
 
+  const onRefresh = (e: any) => {
+    setTimeout(async () => {
+      const serverEvents = await axios.get(baseUrl + "/api/events");
+      setEvents(serverEvents.data);
+      e.detail.complete();
+    }, 1000);
+  };
+
   const test_func = (e: any) => {
     setEventType(e.target.value);
   };
@@ -43,6 +53,17 @@ export default function EventList() {
   return (
     <IonPage className="custom-event-list">
       <IonContent>
+        <IonRefresher
+          slot="fixed"
+          pullFactor={0.5}
+          pullMin={100}
+          pullMax={200}
+          onIonRefresh={onRefresh}
+        >
+          <IonRefresherContent
+            refreshingSpinner={"bubbles"}
+          ></IonRefresherContent>
+        </IonRefresher>
         <IonSegment value={showEventType} onIonChange={(e) => test_func(e)}>
           <IonSegmentButton value="major">
             <IonLabel>Major</IonLabel>
