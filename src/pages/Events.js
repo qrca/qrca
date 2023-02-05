@@ -20,8 +20,8 @@ import axios from "axios";
 
 import "./Events.css";
 
-// const baseUrl = "http://localhost:3001";
-const baseUrl = "http://192.168.1.9:3001";
+const baseUrl = "https://qrca-api.onrender.com";
+// const baseUrl = "http://192.168.1.9:3001";
 
 const Events = ({ events, setEvents }) => {
   const onRefresh = (e) => {

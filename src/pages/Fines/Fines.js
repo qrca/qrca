@@ -12,30 +12,33 @@ import {
   IonItem,
   IonLabel,
   IonText,
+  IonList,
 } from "@ionic/react";
 import { useParams } from "react-router";
 import axios from "axios";
 import "./Fines.css";
 import moment from "moment";
 
-// const baseUrl = "http://localhost:3001/api/events/";
-const baseUrl = "http://192.168.1.9:3001/api/events/";
+const baseUrl = "https://qrca-api.onrender.com/api/events/";
+// const baseUrl = "http://192.168.1.9:3001/api/events/";
 
-export default function Fines() {
+export default function Fines({ events }) {
   let { id } = useParams();
-  const [event, setEvent] = useState([]);
+  const event = events.filter((e) => e.id === id)[0];
+
+  // const [event, setEvent] = useState([]);
   const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    async function getEvent() {
-      const e = await axios.get(baseUrl + id);
-      setEvent(e.data);
-      console.log("===================");
-      console.log(e.data);
-    }
+  // useEffect(() => {
+  //   async function getEvent() {
+  //     const e = await axios.get(baseUrl + id);
+  //     setEvent(e.data);
+  //     console.log("===================");
+  //     console.log(e.data);
+  //   }
 
-    getEvent();
-  }, [id]);
+  //   getEvent();
+  // }, [id]);
 
   let students;
   if (event.length !== 0) {
@@ -201,41 +204,47 @@ export default function Fines() {
           }}
         ></IonSearchbar>
         <div className="studentList">
-          {students
-            .filter(
-              (s) =>
-                s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !==
-                -1
-            )
-            .map((s, i) => (
-              <div key={i}>
-                <IonCard className="ion-margin-start ion-margin-end">
-                  <IonCardHeader>
-                    <IonCardTitle className="">{s.student.name}</IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    <IonAccordionGroup class="ion-margin-bottom">
-                      <IonAccordion>
-                        <IonItem slot="header">
-                          <IonLabel>Fine Breakdown</IonLabel>
-                        </IonItem>
-                        <div className="ion-padding" slot="content">
-                          <p>Login 1: {event.in1 !== null ? s.fine1 : "N/A"}</p>
-                          <p>Login 2: {event.in2 !== null ? s.fine1 : "N/A"}</p>
-                          <p>
-                            Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
-                          </p>
-                          <p>
-                            Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
-                          </p>
-                        </div>
-                      </IonAccordion>
-                    </IonAccordionGroup>
-                    <IonText>Total Fines: {s.fine}</IonText>
-                  </IonCardContent>
-                </IonCard>
-              </div>
-            ))}
+          <IonList class="reposition-list">
+            {students
+              .filter(
+                (s) =>
+                  s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !==
+                  -1
+              )
+              .map((s, i) => (
+                <div key={i}>
+                  <IonCard className="ion-margin-start ion-margin-end">
+                    <IonCardHeader>
+                      <IonCardTitle className="">{s.student.name}</IonCardTitle>
+                    </IonCardHeader>
+                    <IonCardContent>
+                      <IonAccordionGroup class="ion-margin-bottom">
+                        <IonAccordion>
+                          <IonItem slot="header">
+                            <IonLabel>Fine Breakdown</IonLabel>
+                          </IonItem>
+                          <div className="ion-padding" slot="content">
+                            <p>
+                              Login 1: {event.in1 !== null ? s.fine1 : "N/A"}
+                            </p>
+                            <p>
+                              Login 2: {event.in2 !== null ? s.fine1 : "N/A"}
+                            </p>
+                            <p>
+                              Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
+                            </p>
+                            <p>
+                              Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
+                            </p>
+                          </div>
+                        </IonAccordion>
+                      </IonAccordionGroup>
+                      <IonText>Total Fines: {s.fine}</IonText>
+                    </IonCardContent>
+                  </IonCard>
+                </div>
+              ))}
+          </IonList>
         </div>
       </IonContent>
     </IonPage>

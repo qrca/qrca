@@ -46,8 +46,8 @@ setupIonicReact();
 const App: React.FC = () => {
   const [events, setEvents] = useState([]);
 
-  // const baseUrl = "http://localhost:3001";
-  const baseUrl = "http://192.168.1.9:3001";
+  const baseUrl = "https://qrca-api.onrender.com";
+  // const baseUrl = "http://192.168.1.9:3001";
 
   useEffect(() => {
     const getEvents = async () => {
@@ -66,7 +66,7 @@ const App: React.FC = () => {
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/fines/:id">
-              <Fines />
+              <Fines events={events} />
             </Route>
             <Route path="/event-list">
               <IonNav root={() => <EventList />}></IonNav>

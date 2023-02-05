@@ -5,12 +5,17 @@
   align-items: center; */
 
   position: relative;
-  top: calc(50px + 16em);
+  top: calc(50px + 6em);
   transform: translateY(-50%);
 }
 
+.reposition-list {
+  position: absolute;
+  top: 0;
+}
+
 .bar-style {
-  position: relative;
+  position: absolute;
   top: calc(50px + 2em);
   --color: rgba(255, 255, 255, 0.5);
 }

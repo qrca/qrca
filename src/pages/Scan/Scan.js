@@ -21,8 +21,8 @@ import axios from "axios";
 import "./Scan.css";
 import { useEffect, useState } from "react";
 
-// const baseUrl = "http://localhost:3001/api/events/";
-const baseUrl = "http://192.168.1.9:3001/api/events/";
+const baseUrl = "https://qrca-api.onrender.com/api/events/";
+// const baseUrl = "http://192.168.1.9:3001/api/events/";
 
 const logStudent = async (eventId, data) => {
   await axios.put(baseUrl + eventId, data);
