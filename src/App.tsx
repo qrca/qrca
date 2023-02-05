@@ -76,7 +76,7 @@ const App: React.FC = () => {
               <AddEvent />
             </Route>
             <Route exact path="/">
-              <Events />
+              <Events events={events} setEvents={setEvents} />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom" class="custom-background">

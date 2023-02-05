@@ -12,7 +12,6 @@ import {
   IonToolbar,
   IonRefresher,
   IonRefresherContent,
-  RefresherEventDetail,
 } from "@ionic/react";
 
 import EventItem from "../components/EventItem/EventItem";
@@ -20,26 +19,25 @@ import { pencilOutline } from "ionicons/icons";
 import axios from "axios";
 
 import "./Events.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const baseUrl = "http://localhost:3001";
 
-const Events: React.FC = () => {
-  const [events, setEvents] = useState([]);
+const Events = ({ events, setEvents }) => {
   useEffect(() => {
     const getEvents = async () => {
       const serverEvents = await axios.get(`${baseUrl}/api/events`);
       setEvents(serverEvents.data);
-      console.log(serverEvents.data);
     };
 
     getEvents();
   }, []);
 
-  const onRefresh = (e: CustomEvent<RefresherEventDetail>) => {
+  const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await axios.get(`${baseUrl}/api/events`);
       setEvents(serverEvents.data);
+      console.log(events);
       e.detail.complete();
     }, 1000);
   };
@@ -64,20 +62,20 @@ const Events: React.FC = () => {
               <IonTitle>Major Events</IonTitle>
             </IonListHeader>
             {events
-              .filter((e: any) => e.eventType === "major")
-              .map((eventInfo, i) => (
-                <EventItem key={i} eventInfo={eventInfo} />
-              ))}
+              .filter((e) => e.eventType === "major")
+              .map((eventInfo, i) => {
+                return <EventItem key={i} eventInfo={eventInfo} />;
+              })}
           </IonList>
           <IonList lines="none">
             <IonListHeader class="custom-background">
               <IonTitle>Minor Events</IonTitle>
             </IonListHeader>
             {events
-              .filter((e: any) => e.eventType === "minor")
-              .map((eventInfo, i) => (
-                <EventItem key={i} eventInfo={eventInfo} />
-              ))}
+              .filter((e) => e.eventType === "minor")
+              .map((eventInfo, i) => {
+                return <EventItem key={i} eventInfo={eventInfo} />;
+              })}
           </IonList>
         </div>
 

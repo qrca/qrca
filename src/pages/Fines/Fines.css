@@ -5,7 +5,7 @@
   align-items: center; */
 
   position: relative;
-  top: calc(50px + 14em);
+  top: calc(50px + 16em);
   transform: translateY(-50%);
 }
 

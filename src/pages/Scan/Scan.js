@@ -21,6 +21,7 @@ const base_url = "http://localhost:3001/api/events/";
 export default function Scan({ eventInfo }) {
   let { id } = useParams();
   const event = eventInfo.filter((e) => e.id === id)[0];
+  console.log("eventinfo", eventInfo);
 
   const [hideBg, setHideBg] = useState("");
   useEffect(() => {
@@ -64,9 +65,6 @@ export default function Scan({ eventInfo }) {
     setHideBg("");
     document.querySelector("body").classList.remove("scanner-active");
   };
-
-  console.log("====================");
-  console.log(eventInfo);
 
   return (
     <IonPage>

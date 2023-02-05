@@ -53,9 +53,18 @@ export default function Fines() {
       ) {
         if (s.student.isOfficer) {
           fine = 480;
-        } else {
-          fine = 350;
+          return {
+            ...s,
+            fine,
+            fine1: 70,
+            fine2: 70,
+            fine3: 70,
+            fine4: 70,
+          };
         }
+
+        fine = 350;
+
         return {
           ...s,
           fine,
@@ -67,6 +76,9 @@ export default function Fines() {
       }
 
       if (s.login1 === null) {
+        if (s.student.isOfficer) {
+          fine1 += 70;
+        }
         fine1 += 50;
       } else {
         const minutesLate = -moment
@@ -75,13 +87,16 @@ export default function Fines() {
         if (minutesLate > 0) {
           fine1 += Math.ceil(minutesLate / 15) * 5;
 
-          if (s.ifOfficer && minutesLate > 45) {
+          if (s.student.isOfficer && minutesLate > 45) {
             fine1 += 10;
           }
         }
       }
 
       if (s.login2 === null) {
+        if (s.student.isOfficer) {
+          fine2 += 70;
+        }
         fine2 += 50;
       } else {
         const minutesLate = -moment
@@ -89,13 +104,16 @@ export default function Fines() {
           .asMinutes();
         if (minutesLate > 0) {
           fine2 += Math.ceil(minutesLate / 15) * 5;
-          if (s.ifOfficer && minutesLate > 45) {
+          if (s.student.isOfficer && minutesLate > 45) {
             fine2 += 10;
           }
         }
       }
 
       if (s.logout1 === null) {
+        if (s.student.isOfficer) {
+          fine3 += 70;
+        }
         fine3 += 50;
       } else {
         const minutesLate = -moment
@@ -103,21 +121,24 @@ export default function Fines() {
           .asMinutes();
         if (minutesLate > 0) {
           fine3 += Math.ceil(minutesLate / 15) * 5;
-          if (s.ifOfficer && minutesLate > 45) {
+          if (s.student.isOfficer && minutesLate > 45) {
             fine3 += 10;
           }
         }
       }
 
       if (s.logout2 === null) {
+        if (s.student.isOfficer) {
+          fine4 += 70;
+        }
         fine4 += 50;
       } else {
         const minutesLate = -moment
-          .duration(moment(event.outEnd2).diff(moment(s.logout2)).asMinutes())
+          .duration(moment(event.outEnd2).diff(moment(s.logout2)))
           .asMinutes();
         if (minutesLate > 0) {
           fine4 += Math.ceil(minutesLate / 15) * 5;
-          if (s.ifOfficer && minutesLate > 45) {
+          if (s.student.isOfficer && minutesLate > 45) {
             fine4 += 10;
           }
         }

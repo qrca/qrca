@@ -7,6 +7,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonButton,
+  IonLabel,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -19,8 +20,14 @@ const baseUrl = "http://localhost:3001";
 
 const AddEvent = () => {
   let history = useHistory();
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [in1, setIn1] = useState(null);
+  const [inEnd1, setInEnd1] = useState(null);
+  const [in2, setIn2] = useState(null);
+  const [inEnd2, setInEnd2] = useState(null);
+  const [out1, setOut1] = useState(null);
+  const [outEnd1, setOutEnd1] = useState(null);
+  const [out2, setOut2] = useState(null);
+  const [outEnd2, setOutEnd2] = useState(null);
   const [date, setDate] = useState("");
   const [eventType, setEventType] = useState("");
   const [eventName, setEventName] = useState("");
@@ -30,8 +37,14 @@ const AddEvent = () => {
       eventName,
       eventType,
       date: date + "T00:00Z",
-      startTime: date + "T" + startTime + "Z",
-      endTime: date + "T" + endTime + "Z",
+      in1: in1 !== null ? date + "T" + in1 : null,
+      inEnd1: inEnd1 !== null ? date + "T" + inEnd1 : null,
+      in2: in2 !== null ? date + "T" + in2 : null,
+      inEnd2: inEnd2 !== null ? date + "T" + inEnd2 : null,
+      out1: out1 !== null ? date + "T" + out1 : null,
+      outEnd1: outEnd1 ? date + "T" + outEnd1 : null,
+      out2: out2 !== null ? date + "T" + out2 : null,
+      outEnd2: outEnd2 !== null ? date + "T" + outEnd2 : null,
     };
 
     // console.log(data);
@@ -69,17 +82,67 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
+            <IonLabel>Login 1:</IonLabel>
             <IonInput
               placeholder="Start time"
               type="time"
-              onIonChange={(e: any) => setStartTime(e.target.value)}
+              onIonChange={(e: any) => setIn1(e.target.value)}
             ></IonInput>
           </IonItem>
           <IonItem>
+            <IonLabel>Login End 1:</IonLabel>
             <IonInput
               placeholder="End time"
               type="time"
-              onIonChange={(e: any) => setEndTime(e.target.value)}
+              onIonChange={(e: any) => setInEnd1(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Login 2:</IonLabel>
+            <IonInput
+              placeholder="Start time"
+              type="time"
+              onIonChange={(e: any) => setIn2(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Login End 2:</IonLabel>
+            <IonInput
+              placeholder="End time"
+              type="time"
+              onIonChange={(e: any) => setInEnd2(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Logout 1:</IonLabel>
+            <IonInput
+              placeholder="Start time"
+              type="time"
+              onIonChange={(e: any) => setOut1(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Logout End 1:</IonLabel>
+            <IonInput
+              placeholder="End time"
+              type="time"
+              onIonChange={(e: any) => setOutEnd1(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Logout 2:</IonLabel>
+            <IonInput
+              placeholder="Start time"
+              type="time"
+              onIonChange={(e: any) => setOut2(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Logout End 2:</IonLabel>
+            <IonInput
+              placeholder="End time"
+              type="time"
+              onIonChange={(e: any) => setOutEnd2(e.target.value)}
             ></IonInput>
           </IonItem>
           <IonItem class="ion-add-custom-button">
