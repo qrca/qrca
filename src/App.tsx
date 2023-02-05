@@ -69,7 +69,7 @@ const App: React.FC = () => {
               <Fines events={events} />
             </Route>
             <Route path="/event-list">
-              <IonNav root={() => <EventList />}></IonNav>
+              <EventList />
             </Route>
             <Route path="/scan/:id">
               <Scan eventInfo={events} />

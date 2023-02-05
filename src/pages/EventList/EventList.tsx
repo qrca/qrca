@@ -10,6 +10,7 @@ import {
   IonLabel,
   IonRefresher,
   IonRefresherContent,
+  IonText,
 } from "@ionic/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -47,7 +48,17 @@ export default function EventList() {
     setEventType(e.target.value);
   };
   if (events.length === 0) {
-    return <></>;
+    return (
+      <IonPage className="custom-event-list">
+        <IonContent>
+          <IonText color="primary">
+            <h1 className="ion-padding-start">
+              There are currently no events added.
+            </h1>
+          </IonText>
+        </IonContent>
+      </IonPage>
+    );
   }
 
   return (
