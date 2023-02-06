@@ -235,12 +235,21 @@ export default function Fines({ events }) {
                         </IonItem>
                         <div className="ion-padding" slot="content">
                           <p>Login 1: {event.in1 !== null ? s.fine1 : "N/A"}</p>
-                          <p>Login 2: {event.in2 !== null ? s.fine1 : "N/A"}</p>
+                          <p>Login 2: {event.in2 !== null ? s.fine2 : "N/A"}</p>
                           <p>
-                            Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
+                            Logout 1: {event.out1 !== null ? s.fine3 : "N/A"}
                           </p>
                           <p>
-                            Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
+                            Logout 2: {event.out2 !== null ? s.fine4 : "N/A"}
+                          </p>
+                          <p>
+                            Wholeday Absent fines:{" "}
+                            {s.fine1 >= 50 &&
+                            s.fine2 >= 50 &&
+                            s.fine3 >= 50 &&
+                            s.fine4 >= 50
+                              ? 150
+                              : "N/A"}
                           </p>
                         </div>
                       </IonAccordion>

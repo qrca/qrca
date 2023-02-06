@@ -37,15 +37,15 @@ const AddEvent = () => {
     const data = {
       eventName,
       eventType,
-      date: date + "T00:00Z",
-      in1: in1 !== null ? date + "T" + in1 : null,
-      inEnd1: inEnd1 !== null ? date + "T" + inEnd1 : null,
-      in2: in2 !== null ? date + "T" + in2 : null,
-      inEnd2: inEnd2 !== null ? date + "T" + inEnd2 : null,
-      out1: out1 !== null ? date + "T" + out1 : null,
-      outEnd1: outEnd1 ? date + "T" + outEnd1 : null,
-      out2: out2 !== null ? date + "T" + out2 : null,
-      outEnd2: outEnd2 !== null ? date + "T" + outEnd2 : null,
+      date: date + "T00:00",
+      in1: in1 !== null ? date + "T" + in1 + ":00.000Z" : null,
+      inEnd1: inEnd1 !== null ? date + "T" + inEnd1 + ":00.000Z" : null,
+      in2: in2 !== null ? date + "T" + in2 + ":00.000Z" : null,
+      inEnd2: inEnd2 !== null ? date + "T" + inEnd2 + ":00.000Z" : null,
+      out1: out1 !== null ? date + "T" + out1 + ":00.000Z" : null,
+      outEnd1: outEnd1 ? date + "T" + outEnd1 + ":00.000Z" : null,
+      out2: out2 !== null ? date + "T" + out2 + ":00.000Z" : null,
+      outEnd2: outEnd2 !== null ? date + "T" + outEnd2 + ":00.000Z" : null,
     };
 
     // console.log(data);
@@ -84,7 +84,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Login 1:</IonLabel>
+            <IonLabel>MLogin:</IonLabel>
             <IonInput
               placeholder="Start time"
               type="time"
@@ -92,7 +92,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Login End 1:</IonLabel>
+            <IonLabel>MLogin End:</IonLabel>
             <IonInput
               placeholder="End time"
               type="time"
@@ -100,7 +100,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Login 2:</IonLabel>
+            <IonLabel>ALogin:</IonLabel>
             <IonInput
               placeholder="Start time"
               type="time"
@@ -108,7 +108,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Login End 2:</IonLabel>
+            <IonLabel>ALogin End:</IonLabel>
             <IonInput
               placeholder="End time"
               type="time"
@@ -116,7 +116,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Logout 1:</IonLabel>
+            <IonLabel>MLogout:</IonLabel>
             <IonInput
               placeholder="Start time"
               type="time"
@@ -124,7 +124,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Logout End 1:</IonLabel>
+            <IonLabel>MLogout End:</IonLabel>
             <IonInput
               placeholder="End time"
               type="time"
@@ -132,7 +132,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Logout 2:</IonLabel>
+            <IonLabel>ALogout:</IonLabel>
             <IonInput
               placeholder="Start time"
               type="time"
@@ -140,7 +140,7 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>Logout End 2:</IonLabel>
+            <IonLabel>ALogout End:</IonLabel>
             <IonInput
               placeholder="End time"
               type="time"
