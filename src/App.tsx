@@ -9,7 +9,6 @@ import {
   IonTabButton,
   IonIcon,
   IonLabel,
-  IonNav,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import axios from "axios";
@@ -20,7 +19,7 @@ import Events from "./pages/Events";
 import Scan from "./pages/Scan/Scan";
 import EventList from "./pages/EventList/EventList";
 import Fines from "./pages/Fines/Fines";
-import { calendar, cardOutline } from "ionicons/icons";
+import { calendar, cardOutline, addCircleOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -69,7 +68,7 @@ const App: React.FC = () => {
               <Fines events={events} />
             </Route>
             <Route path="/event-list">
-              <EventList />
+              <EventList events={events} setEvents={setEvents} />
             </Route>
             <Route path="/scan/:id">
               <Scan eventInfo={events} />
@@ -90,6 +89,11 @@ const App: React.FC = () => {
             <IonTabButton href="/event-list" tab="fines">
               <IonIcon icon={cardOutline} aria-hidden="true" />
               <IonLabel>Fines</IonLabel>
+            </IonTabButton>
+
+            <IonTabButton href="/add-event" tab="add">
+              <IonIcon icon={addCircleOutline} aria-hidden="true" />
+              <IonLabel>Add</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

@@ -12,31 +12,31 @@ import {
   IonRefresherContent,
   IonText,
 } from "@ionic/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
 import "./EventList.css";
 
-export default function EventList() {
+export default function EventList({ events, setEvents }) {
   const [showEventType, setEventType] = useState("major");
 
-  const [events, setEvents] = useState<any[]>([]);
+  // const [events, setEvents] = useState([]);
 
   const baseUrl = "https://qrca-api.onrender.com";
   // const baseUrl = "http://192.168.1.9:3001";
 
-  useEffect(() => {
-    const getEvents = async () => {
-      const serverEvents = await axios.get(`${baseUrl}/api/events`);
-      setEvents(serverEvents.data);
-    };
+  // useEffect(() => {
+  //   const getEvents = async () => {
+  //     const serverEvents = await axios.get(`${baseUrl}/api/events`);
+  //     setEvents(serverEvents.data);
+  //   };
 
-    getEvents();
-  }, []);
+  //   getEvents();
+  // }, []);
 
-  const onRefresh = (e: any) => {
+  const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await axios.get(baseUrl + "/api/events");
       setEvents(serverEvents.data);
@@ -44,7 +44,7 @@ export default function EventList() {
     }, 1000);
   };
 
-  const test_func = (e: any) => {
+  const test_func = (e) => {
     setEventType(e.target.value);
   };
   if (events.length === 0) {

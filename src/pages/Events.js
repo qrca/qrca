@@ -1,13 +1,9 @@
-import { Link } from "react-router-dom";
 import {
   IonContent,
   IonPage,
   IonTitle,
   IonList,
   IonListHeader,
-  IonFab,
-  IonFabButton,
-  IonIcon,
   IonFooter,
   IonToolbar,
   IonRefresher,
@@ -15,7 +11,6 @@ import {
 } from "@ionic/react";
 
 import EventItem from "../components/EventItem/EventItem";
-import { pencilOutline } from "ionicons/icons";
 import axios from "axios";
 
 import "./Events.css";
@@ -69,13 +64,6 @@ const Events = ({ events, setEvents }) => {
               })}
           </IonList>
         </div>
-        <IonFab slot="fixed" horizontal="end" vertical="bottom" edge>
-          <IonFabButton>
-            <Link to={"/add-event"}>
-              <IonIcon icon={pencilOutline}></IonIcon>
-            </Link>
-          </IonFabButton>
-        </IonFab>
       </IonContent>
       <IonFooter className="ion-no-border">
         <IonToolbar></IonToolbar>
