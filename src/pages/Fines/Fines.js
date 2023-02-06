@@ -13,9 +13,10 @@ import {
   IonLabel,
   IonText,
   IonList,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
 } from "@ionic/react";
 import { useParams } from "react-router";
-// import axios from "axios";
 import "./Fines.css";
 import moment from "moment";
 
@@ -26,8 +27,9 @@ export default function Fines({ events }) {
   let { id } = useParams();
   const event = events.filter((e) => e.id === id)[0];
 
-  // const [event, setEvent] = useState([]);
   const [filter, setFilter] = useState("");
+  const [count, setCount] = useState(10);
+  let students;
 
   // useEffect(() => {
   //   async function getEvent() {
@@ -40,7 +42,6 @@ export default function Fines({ events }) {
   //   getEvent();
   // }, [id]);
 
-  let students;
   if (event.length !== 0) {
     students = event.studentLogs.map((s) => {
       let fine = 0;
@@ -67,26 +68,34 @@ export default function Fines({ events }) {
         s.logout2 === null
       ) {
         if (s.student.isOfficer) {
-          fine = 480;
+          fine1 = event.in1 === null ? 0 : 70;
+          fine2 = event.in2 === null ? 0 : 70;
+          fine3 = event.out1 === null ? 0 : 70;
+          fine4 = event.out2 === null ? 0 : 70;
+          fine = fine1 + fine2 + fine3 + fine4 + 200;
           return {
             ...s,
             fine,
-            fine1: 70,
-            fine2: 70,
-            fine3: 70,
-            fine4: 70,
+            fine1,
+            fine2,
+            fine3,
+            fine4,
           };
         }
 
-        fine = 350;
+        fine1 = event.in1 === null ? 0 : 50;
+        fine2 = event.in2 === null ? 0 : 50;
+        fine3 = event.out1 === null ? 0 : 50;
+        fine4 = event.out2 === null ? 0 : 50;
+        fine = fine1 + fine2 + fine3 + fine4 + 150;
 
         return {
           ...s,
           fine,
-          fine1: 50,
-          fine2: 50,
-          fine3: 50,
-          fine4: 50,
+          fine1,
+          fine2,
+          fine3,
+          fine4,
         };
       }
 
@@ -183,14 +192,21 @@ export default function Fines({ events }) {
         fine4,
       };
     });
-    console.log(students);
   }
+
+  const generateItems = () => {
+    setCount((c) => c + 10);
+  };
 
   if (event.length === 0) {
     return <></>;
   }
 
-  // const t1 = event.in1 === null : "N/A" ? s.fine1;
+  const filteredStudents = students
+    .filter(
+      (s) => s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+    )
+    .slice(0, count);
 
   return (
     <IonPage>
@@ -205,47 +221,45 @@ export default function Fines({ events }) {
         ></IonSearchbar>
         <div className="studentList">
           <IonList class="reposition-list">
-            {students
-              .filter(
-                (s) =>
-                  s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !==
-                  -1
-              )
-              .map((s, i) => (
-                <div key={i}>
-                  <IonCard className="ion-margin-start ion-margin-end">
-                    <IonCardHeader>
-                      <IonCardTitle className="">{s.student.name}</IonCardTitle>
-                    </IonCardHeader>
-                    <IonCardContent>
-                      <IonAccordionGroup class="ion-margin-bottom">
-                        <IonAccordion>
-                          <IonItem slot="header">
-                            <IonLabel>Fine Breakdown</IonLabel>
-                          </IonItem>
-                          <div className="ion-padding" slot="content">
-                            <p>
-                              Login 1: {event.in1 !== null ? s.fine1 : "N/A"}
-                            </p>
-                            <p>
-                              Login 2: {event.in2 !== null ? s.fine1 : "N/A"}
-                            </p>
-                            <p>
-                              Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
-                            </p>
-                            <p>
-                              Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
-                            </p>
-                          </div>
-                        </IonAccordion>
-                      </IonAccordionGroup>
-                      <IonText>Total Fines: {s.fine}</IonText>
-                    </IonCardContent>
-                  </IonCard>
-                </div>
-              ))}
+            {filteredStudents.map((s, i) => (
+              <div key={i}>
+                <IonCard className="ion-margin-start ion-margin-end">
+                  <IonCardHeader>
+                    <IonCardTitle className="">{s.student.name}</IonCardTitle>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <IonAccordionGroup class="ion-margin-bottom">
+                      <IonAccordion>
+                        <IonItem slot="header">
+                          <IonLabel>Fine Breakdown</IonLabel>
+                        </IonItem>
+                        <div className="ion-padding" slot="content">
+                          <p>Login 1: {event.in1 !== null ? s.fine1 : "N/A"}</p>
+                          <p>Login 2: {event.in2 !== null ? s.fine1 : "N/A"}</p>
+                          <p>
+                            Logout 1: {event.out1 !== null ? s.fine1 : "N/A"}
+                          </p>
+                          <p>
+                            Logout 2: {event.out2 !== null ? s.fine1 : "N/A"}
+                          </p>
+                        </div>
+                      </IonAccordion>
+                    </IonAccordionGroup>
+                    <IonText>Total Fines: {s.fine}</IonText>
+                  </IonCardContent>
+                </IonCard>
+              </div>
+            ))}
           </IonList>
         </div>
+        <IonInfiniteScroll
+          onIonInfinite={(ev) => {
+            generateItems();
+            setTimeout(() => ev.target.complete(), 500);
+          }}
+        >
+          <IonInfiniteScrollContent></IonInfiniteScrollContent>
+        </IonInfiniteScroll>
       </IonContent>
     </IonPage>
   );
