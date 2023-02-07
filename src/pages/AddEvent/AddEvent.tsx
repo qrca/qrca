@@ -8,6 +8,7 @@ import {
   IonSelectOption,
   IonButton,
   IonLabel,
+  IonSpinner,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -21,6 +22,7 @@ const baseUrl = "https://qrca-api.onrender.com";
 
 const AddEvent = () => {
   let history = useHistory();
+  const [submitP, setSubmitP] = useState(false);
   const [in1, setIn1] = useState(null);
   const [inEnd1, setInEnd1] = useState(null);
   const [in2, setIn2] = useState(null);
@@ -34,24 +36,27 @@ const AddEvent = () => {
   const [eventName, setEventName] = useState("");
 
   const onSubmit = async () => {
+    setSubmitP(true);
     const data = {
       eventName,
       eventType,
       date: date + "T00:00",
-      in1: in1 !== null ? date + "T" + in1 + ":00.000Z" : null,
-      inEnd1: inEnd1 !== null ? date + "T" + inEnd1 + ":00.000Z" : null,
-      in2: in2 !== null ? date + "T" + in2 + ":00.000Z" : null,
-      inEnd2: inEnd2 !== null ? date + "T" + inEnd2 + ":00.000Z" : null,
-      out1: out1 !== null ? date + "T" + out1 + ":00.000Z" : null,
-      outEnd1: outEnd1 ? date + "T" + outEnd1 + ":00.000Z" : null,
-      out2: out2 !== null ? date + "T" + out2 + ":00.000Z" : null,
-      outEnd2: outEnd2 !== null ? date + "T" + outEnd2 + ":00.000Z" : null,
+      in1: in1 !== null ? date + "T" + in1 + ":00+08:00" : null,
+      inEnd1: inEnd1 !== null ? date + "T" + inEnd1 + ":00+08:00" : null,
+      in2: in2 !== null ? date + "T" + in2 + ":00+08:00" : null,
+      inEnd2: inEnd2 !== null ? date + "T" + inEnd2 + ":00+08:00" : null,
+      out1: out1 !== null ? date + "T" + out1 + ":00+08:00" : null,
+      outEnd1: outEnd1 ? date + "T" + outEnd1 + ":00+08:00" : null,
+      out2: out2 !== null ? date + "T" + out2 + ":00+08:00" : null,
+      outEnd2: outEnd2 !== null ? date + "T" + outEnd2 + ":00+08:00" : null,
     };
 
     // console.log(data);
 
-    await axios.post(`${baseUrl}/api/events`, data);
-    history.push("/");
+    await axios.post(`${baseUrl}/api/events`, data).then(() => {
+      setSubmitP(false);
+      history.push("/");
+    });
   };
 
   return (
@@ -100,22 +105,6 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem>
-            <IonLabel>ALogin:</IonLabel>
-            <IonInput
-              placeholder="Start time"
-              type="time"
-              onIonChange={(e: any) => setIn2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>ALogin End:</IonLabel>
-            <IonInput
-              placeholder="End time"
-              type="time"
-              onIonChange={(e: any) => setInEnd2(e.target.value)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
             <IonLabel>MLogout:</IonLabel>
             <IonInput
               placeholder="Start time"
@@ -129,6 +118,22 @@ const AddEvent = () => {
               placeholder="End time"
               type="time"
               onIonChange={(e: any) => setOutEnd1(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>ALogin:</IonLabel>
+            <IonInput
+              placeholder="Start time"
+              type="time"
+              onIonChange={(e: any) => setIn2(e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>ALogin End:</IonLabel>
+            <IonInput
+              placeholder="End time"
+              type="time"
+              onIonChange={(e: any) => setInEnd2(e.target.value)}
             ></IonInput>
           </IonItem>
           <IonItem>
@@ -148,9 +153,17 @@ const AddEvent = () => {
             ></IonInput>
           </IonItem>
           <IonItem class="ion-add-custom-button">
-            <IonButton class="add-custom-button" onClick={onSubmit}>
-              Submit
-            </IonButton>
+            {!submitP && (
+              <IonButton
+                class="add-custom-button ion-padding ion-margin-bottom"
+                onClick={onSubmit}
+              >
+                Submit
+              </IonButton>
+            )}
+            {submitP && (
+              <IonSpinner name="circular" class="center-spinner"></IonSpinner>
+            )}
           </IonItem>
         </IonList>
       </IonContent>

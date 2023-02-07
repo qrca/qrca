@@ -44,15 +44,18 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [events, setEvents] = useState([]);
+  const [progress, setProgress] = useState(true);
 
   const baseUrl = "https://qrca-api.onrender.com";
   // const baseUrl = "http://192.168.1.9:3001";
 
   useEffect(() => {
     const getEvents = async () => {
-      const serverEvents = await axios.get(`${baseUrl}/api/events`);
-      setEvents(serverEvents.data);
-      console.log(serverEvents.data);
+      await axios.get(`${baseUrl}/api/events`).then((res) => {
+        setProgress(false);
+        setEvents(res.data);
+        console.log(res.data);
+      });
     };
 
     getEvents();
@@ -77,7 +80,11 @@ const App: React.FC = () => {
               <AddEvent />
             </Route>
             <Route exact path="/">
-              <Events events={events} setEvents={setEvents} />
+              <Events
+                events={events}
+                setEvents={setEvents}
+                progress={progress}
+              />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom" class="custom-background">

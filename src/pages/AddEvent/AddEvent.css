@@ -40,3 +40,9 @@ ion-button.add-custom-button {
 .ion-add-custom-button {
   border: none;
 }
+
+.center-spinner {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

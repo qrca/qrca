@@ -36,6 +36,8 @@ export default function Scan({ eventInfo }) {
   const [logCat, setLogCat] = useState("");
   const [present] = useIonToast();
 
+  console.log(moment().tz("Asia/Manila").format());
+
   const presentToast = (
     student,
     message = "Please select a timeframe to log first."
@@ -106,9 +108,7 @@ export default function Scan({ eventInfo }) {
         BarcodeScanner.pauseScanning();
         const name = result.content.split("~")[1];
         const studentId = result.content.split("~")[0].trim();
-        const logTime =
-          moment().tz("Asia/Manila").format().slice(0, 19) + ".000Z";
-        // console.log(logTime);
+        const logTime = moment().tz("Asia/Manila").format();
         if (logCat === "") {
           presentToast("");
         } else if (logCat === "login1") {
@@ -173,40 +173,20 @@ export default function Scan({ eventInfo }) {
                 onIonChange={(e) => setLogCat(e.target.value)}
               >
                 <IonSelectOption value="login1">
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.in1}
-                  </Moment>{" "}
-                  -{" "}
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.inEnd1}
-                  </Moment>
-                </IonSelectOption>
-                <IonSelectOption value="login2">
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.in2}
-                  </Moment>{" "}
-                  -{" "}
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.inEnd2}
-                  </Moment>
+                  <Moment format="hh:mm a">{event.in1}</Moment> -{" "}
+                  <Moment format="hh:mm a">{event.inEnd1}</Moment>
                 </IonSelectOption>
                 <IonSelectOption value="logout1">
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.out1}
-                  </Moment>{" "}
-                  -{" "}
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.outEnd1}
-                  </Moment>
+                  <Moment format="hh:mm a">{event.out1}</Moment> -{" "}
+                  <Moment format="hh:mm a">{event.outEnd1}</Moment>
+                </IonSelectOption>
+                <IonSelectOption value="login2">
+                  <Moment format="hh:mm a">{event.in2}</Moment> -{" "}
+                  <Moment format="hh:mm a">{event.inEnd2}</Moment>
                 </IonSelectOption>
                 <IonSelectOption value="logout2">
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.out2}
-                  </Moment>{" "}
-                  -{" "}
-                  <Moment tz="Europe/London" format="hh:mm a">
-                    {event.outEnd2}
-                  </Moment>
+                  <Moment format="hh:mm a">{event.out2}</Moment> -{" "}
+                  <Moment format="hh:mm a">{event.outEnd2}</Moment>
                 </IonSelectOption>
               </IonSelect>
             </IonItem>

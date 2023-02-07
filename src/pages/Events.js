@@ -8,6 +8,7 @@ import {
   IonToolbar,
   IonRefresher,
   IonRefresherContent,
+  IonSkeletonText,
 } from "@ionic/react";
 
 import EventItem from "../components/EventItem/EventItem";
@@ -18,7 +19,7 @@ import "./Events.css";
 const baseUrl = "https://qrca-api.onrender.com";
 // const baseUrl = "http://192.168.1.9:3001";
 
-const Events = ({ events, setEvents }) => {
+const Events = ({ events, setEvents, progress }) => {
   const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await axios.get(`${baseUrl}/api/events`);
@@ -47,6 +48,22 @@ const Events = ({ events, setEvents }) => {
             <IonListHeader class="custom-background">
               <IonTitle>Major Events</IonTitle>
             </IonListHeader>
+            {progress && (
+              <div class="skel-text">
+                <p>
+                  <IonSkeletonText
+                    animated={true}
+                    style={{ width: "60%" }}
+                  ></IonSkeletonText>
+                </p>
+                <p>
+                  <IonSkeletonText
+                    animated={true}
+                    style={{ width: "30%" }}
+                  ></IonSkeletonText>
+                </p>
+              </div>
+            )}
             {events
               .filter((e) => e.eventType === "major")
               .map((eventInfo, i) => {
@@ -57,6 +74,22 @@ const Events = ({ events, setEvents }) => {
             <IonListHeader class="custom-background">
               <IonTitle>Minor Events</IonTitle>
             </IonListHeader>
+            {progress && (
+              <div class="skel-text">
+                <p>
+                  <IonSkeletonText
+                    animated={true}
+                    style={{ width: "60%" }}
+                  ></IonSkeletonText>
+                </p>
+                <p>
+                  <IonSkeletonText
+                    animated={true}
+                    style={{ width: "30%" }}
+                  ></IonSkeletonText>
+                </p>
+              </div>
+            )}
             {events
               .filter((e) => e.eventType === "minor")
               .map((eventInfo, i) => {
