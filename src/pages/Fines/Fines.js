@@ -144,16 +144,6 @@ export default function Fines({ events }) {
           fine3 += 70;
         }
         fine3 += 50;
-      } else {
-        const minutesLate = -moment
-          .duration(moment(event.outEnd1).diff(moment(s.logout1)))
-          .asMinutes();
-        if (minutesLate > 0) {
-          fine3 += Math.ceil(minutesLate / 15) * 5;
-          if (s.student.isOfficer && minutesLate > 45) {
-            fine3 += 10;
-          }
-        }
       }
 
       if (event.out2 === null) {
@@ -163,16 +153,6 @@ export default function Fines({ events }) {
           fine4 += 70;
         }
         fine4 += 50;
-      } else {
-        const minutesLate = -moment
-          .duration(moment(event.outEnd2).diff(moment(s.logout2)))
-          .asMinutes();
-        if (minutesLate > 0) {
-          fine4 += Math.ceil(minutesLate / 15) * 5;
-          if (s.student.isOfficer && minutesLate > 45) {
-            fine4 += 10;
-          }
-        }
       }
 
       // console.log(moment(event.inEnd1), moment(s.login1));
@@ -244,10 +224,18 @@ export default function Fines({ events }) {
                           </p>
                           <p>
                             Wholeday Absent fines:{" "}
-                            {s.fine1 >= 50 &&
-                            s.fine2 >= 50 &&
-                            s.fine3 >= 50 &&
-                            s.fine4 >= 50
+                            {(s.fine1 >= 50 &&
+                              s.fine2 >= 50 &&
+                              s.fine3 >= 50 &&
+                              s.fine4 >= 50) ||
+                            (s.fine1 >= 50 &&
+                              s.fine3 >= 50 &&
+                              event.in2 === null &&
+                              event.out2 === null) ||
+                            (s.fine2 >= 50 &&
+                              s.fine4 >= 50 &&
+                              event.in1 === null &&
+                              event.out1 === null)
                               ? 150
                               : "N/A"}
                           </p>
