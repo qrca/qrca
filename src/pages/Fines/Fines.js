@@ -49,6 +49,7 @@ export default function Fines({ events }) {
       let fine2 = 0;
       let fine3 = 0;
       let fine4 = 0;
+      let wholeDay = 0;
 
       if (s.isExcused) {
         return {
@@ -68,11 +69,16 @@ export default function Fines({ events }) {
         s.logout2 === null
       ) {
         if (s.student.isOfficer) {
-          fine1 = event.in1 === null ? 0 : 70;
-          fine2 = event.in2 === null ? 0 : 70;
-          fine3 = event.out1 === null ? 0 : 70;
-          fine4 = event.out2 === null ? 0 : 70;
-          fine = fine1 + fine2 + fine3 + fine4 + 200;
+          fine1 =
+            event.in1 === null ? 0 : event.eventType === "minor" ? 50 : 70;
+          fine2 =
+            event.in2 === null ? 0 : event.eventType === "minor" ? 50 : 70;
+          fine3 =
+            event.out1 === null ? 0 : event.eventType === "minor" ? 50 : 70;
+          fine4 =
+            event.out2 === null ? 0 : event.eventType === "minor" ? 50 : 70;
+          wholeDay = event.eventType === "minor" ? 100 : 200;
+          fine = fine1 + fine2 + fine3 + fine4 + wholeDay;
           return {
             ...s,
             fine,
@@ -83,11 +89,12 @@ export default function Fines({ events }) {
           };
         }
 
-        fine1 = event.in1 === null ? 0 : 50;
-        fine2 = event.in2 === null ? 0 : 50;
-        fine3 = event.out1 === null ? 0 : 50;
-        fine4 = event.out2 === null ? 0 : 50;
-        fine = fine1 + fine2 + fine3 + fine4 + 150;
+        fine1 = event.in1 === null ? 0 : event.eventType === "minor" ? 20 : 50;
+        fine2 = event.in2 === null ? 0 : event.eventType === "minor" ? 20 : 50;
+        fine3 = event.out1 === null ? 0 : event.eventType === "minor" ? 20 : 50;
+        fine4 = event.out2 === null ? 0 : event.eventType === "minor" ? 20 : 50;
+        wholeDay = event.eventType === "minor" ? 50 : 150;
+        fine = fine1 + fine2 + fine3 + fine4 + wholeDay;
 
         return {
           ...s,
@@ -96,63 +103,122 @@ export default function Fines({ events }) {
           fine2,
           fine3,
           fine4,
+          wholeDay,
         };
       }
 
-      if (event.in1 === null) {
-        fine1 = 0;
-      } else if (s.login1 === null) {
-        if (s.student.isOfficer) {
-          fine1 += 70;
-        }
-        fine1 += 50;
-      } else {
-        const minutesLate = -moment
-          .duration(moment(event.inEnd1).diff(moment(s.login1)))
-          .asMinutes();
-        if (minutesLate > 0) {
-          fine1 += Math.ceil(minutesLate / 15) * 5;
+      if (event.eventType === "major") {
+        if (event.in1 === null) {
+          fine1 = 0;
+        } else if (s.login1 === null) {
+          if (s.student.isOfficer) {
+            fine1 += 70;
+          }
+          fine1 += 50;
+        } else {
+          const minutesLate = -moment
+            .duration(moment(event.inEnd1).diff(moment(s.login1)))
+            .asMinutes();
+          if (minutesLate > 0) {
+            fine1 += Math.ceil(minutesLate / 15) * 5;
 
-          if (s.student.isOfficer && minutesLate > 45) {
-            fine1 += 10;
+            if (s.student.isOfficer && minutesLate > 45) {
+              fine1 += 10;
+            }
           }
         }
-      }
-      if (event.in2 === null) {
-        fine2 = 0;
-      } else if (s.login2 === null) {
-        if (s.student.isOfficer) {
-          fine2 += 70;
-        }
-        fine2 += 50;
-      } else {
-        const minutesLate = -moment
-          .duration(moment(event.inEnd2).diff(moment(s.login2)))
-          .asMinutes();
-        if (minutesLate > 0) {
-          fine2 += Math.ceil(minutesLate / 15) * 5;
-          if (s.student.isOfficer && minutesLate > 45) {
-            fine2 += 10;
+        if (event.in2 === null) {
+          fine2 = 0;
+        } else if (s.login2 === null) {
+          if (s.student.isOfficer) {
+            fine2 += 70;
+          }
+          fine2 += 50;
+        } else {
+          const minutesLate = -moment
+            .duration(moment(event.inEnd2).diff(moment(s.login2)))
+            .asMinutes();
+          if (minutesLate > 0) {
+            fine2 += Math.ceil(minutesLate / 15) * 5;
+            if (s.student.isOfficer && minutesLate > 45) {
+              fine2 += 10;
+            }
           }
         }
-      }
 
-      if (event.out1 === null) {
-        fine3 = 0;
-      } else if (s.logout1 === null) {
-        if (s.student.isOfficer) {
-          fine3 += 70;
+        if (event.out1 === null) {
+          fine3 = 0;
+        } else if (s.logout1 === null) {
+          if (s.student.isOfficer) {
+            fine3 += 70;
+          }
+          fine3 += 50;
         }
-        fine3 += 50;
-      }
 
-      if (event.out2 === null) {
-        fine4 = 0;
-      } else if (s.logout2 === null) {
-        if (s.student.isOfficer) {
-          fine4 += 70;
+        if (event.out2 === null) {
+          fine4 = 0;
+        } else if (s.logout2 === null) {
+          if (s.student.isOfficer) {
+            fine4 += 70;
+          }
+          fine4 += 50;
         }
-        fine4 += 50;
+      } else {
+        if (event.in1 === null) {
+          fine1 = 0;
+        } else if (s.login1 === null) {
+          if (s.student.isOfficer) {
+            fine1 += 50;
+          }
+          fine1 += 20;
+        } else {
+          const minutesLate = -moment
+            .duration(moment(event.inEnd1).diff(moment(s.login1)))
+            .asMinutes();
+          if (minutesLate > 0) {
+            fine1 += Math.ceil(minutesLate / 12) * 2;
+
+            if (s.student.isOfficer && minutesLate > 45) {
+              fine1 += 10;
+            }
+          }
+        }
+        if (event.in2 === null) {
+          fine2 = 0;
+        } else if (s.login2 === null) {
+          if (s.student.isOfficer) {
+            fine1 += 50;
+          }
+          fine1 += 20;
+        } else {
+          const minutesLate = -moment
+            .duration(moment(event.inEnd2).diff(moment(s.login2)))
+            .asMinutes();
+          if (minutesLate > 0) {
+            fine2 += Math.ceil(minutesLate / 12) * 2;
+            if (s.student.isOfficer && minutesLate > 45) {
+              fine2 += 10;
+            }
+          }
+        }
+
+        if (event.out1 === null) {
+          fine3 = 0;
+        } else if (s.logout1 === null) {
+          if (s.student.isOfficer) {
+            fine1 += 50;
+          }
+          fine1 += 20;
+        }
+
+        if (event.out2 === null) {
+          fine4 = 0;
+        } else if (s.logout2 === null) {
+          if (s.student.isOfficer) {
+            fine1 += 50;
+          }
+          fine1 += 20;
+        }
       }
 
       // console.log(moment(event.inEnd1), moment(s.login1));
@@ -170,6 +236,7 @@ export default function Fines({ events }) {
         fine2,
         fine3,
         fine4,
+        wholeDay: 0,
       };
     });
   }
@@ -222,23 +289,7 @@ export default function Fines({ events }) {
                           <p>
                             Logout 2: {event.out2 !== null ? s.fine4 : "N/A"}
                           </p>
-                          <p>
-                            Wholeday Absent fines:{" "}
-                            {(s.fine1 >= 50 &&
-                              s.fine2 >= 50 &&
-                              s.fine3 >= 50 &&
-                              s.fine4 >= 50) ||
-                            (s.fine1 >= 50 &&
-                              s.fine3 >= 50 &&
-                              event.in2 === null &&
-                              event.out2 === null) ||
-                            (s.fine2 >= 50 &&
-                              s.fine4 >= 50 &&
-                              event.in1 === null &&
-                              event.out1 === null)
-                              ? 150
-                              : "N/A"}
-                          </p>
+                          <p>Wholeday Absent fines:{s.wholeDay}</p>
                         </div>
                       </IonAccordion>
                     </IonAccordionGroup>

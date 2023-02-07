@@ -7,6 +7,7 @@ import {
   IonSelect,
   IonSelectOption,
   useIonToast,
+  IonSpinner,
 } from "@ionic/react";
 import {
   BarcodeScanner,
@@ -24,12 +25,9 @@ import { useEffect, useState } from "react";
 const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
 
-const logStudent = async (eventId, data) => {
-  await axios.put(baseUrl + eventId, data);
-};
-
 export default function Scan({ eventInfo }) {
   let { id } = useParams();
+  const [isSending, setIsSending] = useState(false);
   const event = eventInfo.filter((e) => e.id === id)[0];
 
   const [hideBg, setHideBg] = useState("");
@@ -109,6 +107,8 @@ export default function Scan({ eventInfo }) {
         const name = result.content.split("~")[1];
         const studentId = result.content.split("~")[0].trim();
         const logTime = moment().tz("Asia/Manila").format();
+
+        setIsSending(true);
         if (logCat === "") {
           presentToast("");
         } else if (logCat === "login1") {
@@ -117,38 +117,45 @@ export default function Scan({ eventInfo }) {
             login1: logTime,
           };
           console.log(data);
-          logStudent(id, data);
-
-          presentToast(name);
+          axios.put(baseUrl + id, data).then(() => {
+            setIsSending(false);
+            setTimeout(BarcodeScanner.resumeScanning, 1500);
+            presentToast(name);
+          });
         } else if (logCat === "login2") {
           const data = {
             studentId,
             login2: logTime,
           };
-          console.log(data);
-          logStudent(id, data);
-
-          presentToast(name);
+          console.log("hihih");
+          axios.put(baseUrl + id, data).then(() => {
+            setIsSending(false);
+            setTimeout(BarcodeScanner.resumeScanning, 1500);
+            presentToast(name);
+          });
         } else if (logCat === "logout1") {
           const data = {
             studentId,
             logout1: logTime,
           };
           console.log(data);
-          logStudent(id, data);
-
-          presentToast(name);
+          axios.put(baseUrl + id, data).then(() => {
+            setIsSending(false);
+            setTimeout(BarcodeScanner.resumeScanning, 1500);
+            presentToast(name);
+          });
         } else if (logCat === "logout2") {
           const data = {
             studentId,
             logout2: logTime,
           };
           console.log(data);
-          logStudent(id, data);
-
-          presentToast(name);
+          axios.put(baseUrl + id, data).then(() => {
+            setIsSending(false);
+            setTimeout(BarcodeScanner.resumeScanning, 1500);
+            presentToast(name);
+          });
         }
-        setTimeout(BarcodeScanner.resumeScanning, 1500);
       }
     );
     console.log(test);
@@ -199,7 +206,13 @@ export default function Scan({ eventInfo }) {
           </div>
         </div>
       </IonContent>
-      <div hidden={!hideBg} className="scan-box"></div>
+      <div hidden={!hideBg} className="scan-box">
+        {isSending && (
+          <div className="center-loading">
+            <IonSpinner name="circular"></IonSpinner>
+          </div>
+        )}
+      </div>
       <IonButton
         hidden={!hideBg}
         class="custom-ion-btn stop-btn"
