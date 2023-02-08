@@ -16,10 +16,11 @@ import {
   IonInfiniteScroll,
   IonInfiniteScrollContent,
 } from "@ionic/react";
+
 import { useParams } from "react-router";
 import "./Fines.css";
 import moment from "moment";
-
+import Moment from "react-moment";
 // const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
 
@@ -59,6 +60,7 @@ export default function Fines({ events }) {
           fine2: 0,
           fine3: 0,
           fine4: 0,
+          wholeDay,
         };
       }
 
@@ -315,19 +317,39 @@ export default function Fines({ events }) {
                         <div className="ion-padding" slot="content">
                           <p>
                             Morning Login:{" "}
-                            {event.in1 !== null ? s.fine1 : "N/A"}
+                            {event.in1 !== null
+                              ? `Php ${s.fine1} - Log: `
+                              : "N/A"}
+                            {s.login1 !== null && (
+                              <Moment format="hh:mm a">{s.login1}</Moment>
+                            )}
                           </p>
                           <p>
                             Morning Logout:{" "}
-                            {event.out1 !== null ? s.fine3 : "N/A"}
+                            {event.out1 !== null
+                              ? `Php ${s.fine3} - Log: `
+                              : "N/A"}
+                            {s.logout1 !== null && (
+                              <Moment format="hh:mm a">{s.logout1}</Moment>
+                            )}
                           </p>
                           <p>
                             Afternoon Login:{" "}
-                            {event.in2 !== null ? s.fine2 : "N/A"}
+                            {event.in2 !== null
+                              ? `Php ${s.fine2} - Log: `
+                              : "N/A"}
+                            {s.login2 !== null && (
+                              <Moment format="hh:mm a">{s.login2}</Moment>
+                            )}
                           </p>
                           <p>
                             Afternoon Logout:{" "}
-                            {event.out2 !== null ? s.fine4 : "N/A"}
+                            {event.out2 !== null
+                              ? `Php ${s.fine4} - Log: `
+                              : "N/A"}
+                            {s.logout2 !== null && (
+                              <Moment format="hh:mm a">{s.logout2}</Moment>
+                            )}
                           </p>
                           <p>Wholeday Absent fines:{s.wholeDay}</p>
                         </div>

@@ -8,6 +8,12 @@ import {
   IonSelectOption,
   useIonToast,
   IonSpinner,
+  IonModal,
+  IonInput,
+  IonLabel,
+  IonToolbar,
+  IonHeader,
+  IonButtons,
 } from "@ionic/react";
 import {
   BarcodeScanner,
@@ -20,7 +26,7 @@ import "moment-timezone";
 import axios from "axios";
 
 import "./Scan.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
@@ -34,7 +40,8 @@ export default function Scan({ eventInfo }) {
   const [logCat, setLogCat] = useState("");
   const [present] = useIonToast();
 
-  console.log(moment().tz("Asia/Manila").format());
+  const modal = useRef(null);
+  const input = useRef(null);
 
   const presentToast = (
     student,
@@ -71,6 +78,77 @@ export default function Scan({ eventInfo }) {
   // const updateStudent = async (student_id) => {
   //   await axios.put();
   // };
+  const manualLog = (sId) => {
+    setIsSending(true);
+    const student = event.studentLogs.filter((s) => s.student._id === sId);
+    if (logCat === "") {
+      setIsSending(false);
+      presentToast("");
+    } else if (student.length === 0) {
+      setIsSending(false);
+      presentToast("", `Student with ID ${sId} doesn't exist`);
+    } else {
+      const logTime = moment().tz("Asia/Manila").format();
+      const name = student[0].student.name;
+
+      if (logCat === "login1") {
+        const data = {
+          studentId: sId,
+          login1: logTime,
+        };
+
+        axios.put(baseUrl + id, data).then(() => {
+          setIsSending(false);
+          presentToast(name);
+        });
+      } else if (logCat === "login2") {
+        const data = {
+          studentId: sId,
+          login2: logTime,
+        };
+        axios
+          .put(baseUrl + id, data)
+          .then(() => {
+            setIsSending(false);
+            presentToast(name);
+          })
+          .catch((e) => {
+            setIsSending(false);
+            presentToast("", e.message);
+          });
+      } else if (logCat === "logout1") {
+        const data = {
+          studentId: sId,
+          logout1: logTime,
+        };
+        axios
+          .put(baseUrl + id, data)
+          .then(() => {
+            setIsSending(false);
+            presentToast(name);
+          })
+          .catch((e) => {
+            setIsSending(false);
+            presentToast("", e.message);
+          });
+      } else if (logCat === "logout2") {
+        const data = {
+          studentId: sId,
+          logout2: logTime,
+        };
+        axios
+          .put(baseUrl + id, data)
+          .then(() => {
+            setIsSending(false);
+            presentToast(name);
+          })
+          .catch((e) => {
+            setIsSending(false);
+            presentToast("", e.message);
+          });
+      }
+    }
+  };
 
   const startScan = async () => {
     // Check camera permission
@@ -116,7 +194,7 @@ export default function Scan({ eventInfo }) {
             studentId,
             login1: logTime,
           };
-          console.log(data);
+          console.log(baseUrl + id, data);
           axios.put(baseUrl + id, data).then(() => {
             setIsSending(false);
             setTimeout(BarcodeScanner.resumeScanning, 1500);
@@ -171,6 +249,37 @@ export default function Scan({ eventInfo }) {
   return (
     <IonPage>
       <IonContent className="hideBg" hidden={!!hideBg}>
+        <IonModal ref={modal} trigger="open-modal">
+          <IonContent>
+            <IonHeader className="ion-padding-bottom ion-padding-top">
+              <IonToolbar>
+                <IonButtons slot="start">
+                  <IonButton
+                    className="ion-margin-start"
+                    onClick={() => modal.current?.dismiss()}
+                  >
+                    Cancel
+                  </IonButton>
+                </IonButtons>
+              </IonToolbar>
+            </IonHeader>
+            <IonItem className="ion-margin-start ion-margin-end">
+              <IonLabel position="stacked">Enter Student ID:</IonLabel>
+              <IonInput ref={input} type="text" placeholder="XXXX-XX-XXXX" />
+            </IonItem>
+            <div className="center-input">
+              {!isSending && (
+                <IonButton
+                  className="custom-ion-btn ion-margin-top"
+                  onClick={() => manualLog(input.current?.value)}
+                >
+                  Submit
+                </IonButton>
+              )}
+              {isSending && <IonSpinner name="circular"></IonSpinner>}
+            </div>
+          </IonContent>
+        </IonModal>
         <div className="custom-scan">
           <h1>{event.eventName}</h1>
           <IonList>
@@ -200,6 +309,13 @@ export default function Scan({ eventInfo }) {
           </IonList>
 
           <div className="btn-margin">
+            <IonButton
+              class="custom-ion-btn manual-input"
+              id="open-modal"
+              expand="block"
+            >
+              Manual Input
+            </IonButton>
             <IonButton class="custom-ion-btn" onClick={startScan}>
               Scan
             </IonButton>
