@@ -4,8 +4,12 @@ import logo from "../../assets/acs_logo.png";
 
 const Header = () => {
   return (
-    <IonHeader class="ion-no-border ion-margin-top ion-margin-start">
-      <IonImg src={logo} alt={"ACS Logo"} class="img-size" />
+    <IonHeader class="header-background ion-padding-bottom">
+      <IonImg
+        src={logo}
+        alt={"ACS Logo"}
+        class="img-size ion-no-border ion-margin-top ion-margin-start"
+      />
     </IonHeader>
   );
 };

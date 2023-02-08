@@ -86,6 +86,7 @@ export default function Fines({ events }) {
             fine2,
             fine3,
             fine4,
+            wholeDay,
           };
         }
 
@@ -106,7 +107,6 @@ export default function Fines({ events }) {
           wholeDay,
         };
       }
-      console.log(event.in1 === null, "BYAOOOO");
 
       if (event.eventType === "major") {
         if (event.in1 === null) {
@@ -114,8 +114,9 @@ export default function Fines({ events }) {
         } else if (s.login1 === null) {
           if (s.student.isOfficer) {
             fine1 += 70;
+          } else {
+            fine1 += 50;
           }
-          fine1 += 50;
         } else {
           const minutesLate = -moment
             .duration(moment(event.inEnd1).diff(moment(s.login1)))
@@ -136,8 +137,9 @@ export default function Fines({ events }) {
         } else if (s.login2 === null) {
           if (s.student.isOfficer) {
             fine2 += 70;
+          } else {
+            fine2 += 50;
           }
-          fine2 += 50;
         } else {
           const minutesLate = -moment
             .duration(moment(event.inEnd2).diff(moment(s.login2)))
@@ -158,8 +160,9 @@ export default function Fines({ events }) {
         } else if (s.logout1 === null) {
           if (s.student.isOfficer) {
             fine3 += 70;
+          } else {
+            fine3 += 50;
           }
-          fine3 += 50;
         }
 
         if (event.out2 === null) {
@@ -167,8 +170,9 @@ export default function Fines({ events }) {
         } else if (s.logout2 === null) {
           if (s.student.isOfficer) {
             fine4 += 70;
+          } else {
+            fine4 += 50;
           }
-          fine4 += 50;
         }
       } else {
         if (event.in1 === null) {
@@ -176,8 +180,9 @@ export default function Fines({ events }) {
         } else if (s.login1 === null) {
           if (s.student.isOfficer) {
             fine1 += 50;
+          } else {
+            fine1 += 20;
           }
-          fine1 += 20;
         } else {
           const minutesLate = -moment
             .duration(moment(event.inEnd1).diff(moment(s.login1)))
@@ -187,7 +192,6 @@ export default function Fines({ events }) {
               Math.ceil(minutesLate / 12) * 2,
               s.student.isOfficer ? 40 : 20
             );
-
             if (s.student.isOfficer && minutesLate > 45) {
               fine1 += 10;
             }
@@ -198,8 +202,9 @@ export default function Fines({ events }) {
         } else if (s.login2 === null) {
           if (s.student.isOfficer) {
             fine2 += 50;
+          } else {
+            fine2 += 20;
           }
-          fine2 += 20;
         } else {
           const minutesLate = -moment
             .duration(moment(event.inEnd2).diff(moment(s.login2)))
@@ -220,8 +225,9 @@ export default function Fines({ events }) {
         } else if (s.logout1 === null) {
           if (s.student.isOfficer) {
             fine3 += 50;
+          } else {
+            fine3 += 20;
           }
-          fine3 += 20;
         }
 
         if (event.out2 === null) {
@@ -229,8 +235,9 @@ export default function Fines({ events }) {
         } else if (s.logout2 === null) {
           if (s.student.isOfficer) {
             fine4 += 50;
+          } else {
+            fine4 += 20;
           }
-          fine4 += 20;
         }
       }
 
