@@ -19,7 +19,6 @@ import {
 
 import { useParams } from "react-router";
 import "./Fines.css";
-import moment from "moment";
 import Moment from "react-moment";
 import { calculateFines } from "../../utils/utils";
 

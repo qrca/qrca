@@ -4,11 +4,10 @@ import {
   IonList,
   IonPage,
   IonContent,
-  IonSelect,
-  IonSelectOption,
   IonButton,
   IonLabel,
   IonSpinner,
+  IonCheckbox,
 } from "@ionic/react";
 
 import { useState } from "react";
@@ -33,14 +32,14 @@ const AddEvent = () => {
   const [out2, setOut2] = useState(null);
   const [outEnd2, setOutEnd2] = useState(null);
   const [date, setDate] = useState("");
-  const [eventType, setEventType] = useState("");
+  const [hasNoFines, setHasNoFines] = useState(true);
   const [eventName, setEventName] = useState("");
 
   const onSubmit = async () => {
     setSubmitP(true);
     const data = {
       eventName,
-      eventType,
+      hasNoFines,
       date: date + "T00:00",
       in1: in1 !== null ? date + "T" + in1 + ":00+08:00" : null,
       inEnd1: inEnd1 !== null ? date + "T" + inEnd1 + ":00+08:00" : null,
@@ -66,14 +65,11 @@ const AddEvent = () => {
         <IonList className="custom-list">
           <h1>Add Event</h1>
           <IonItem>
-            <IonSelect
-              interface="action-sheet"
-              placeholder="Select event type"
-              onIonChange={(e: any) => setEventType(e.target.value)}
-            >
-              <IonSelectOption value="major">Major</IonSelectOption>
-              <IonSelectOption value="minor">Minor</IonSelectOption>
-            </IonSelect>
+            <IonCheckbox
+              slot="start"
+              onIonChange={() => setHasNoFines(!hasNoFines)}
+            ></IonCheckbox>
+            <IonLabel>Implement Fines</IonLabel>
           </IonItem>
           <IonItem>
             <IonInput

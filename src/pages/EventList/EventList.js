@@ -84,28 +84,26 @@ export default function EventList({ events, setEvents }) {
           </IonSegmentButton>
         </IonSegment>
         <div className="ion-margin-top">
-          {events
-            .filter((e) => e.eventType === showEventType)
-            .map((e, i) => (
-              <div key={i}>
-                <IonCard
-                  className="ion-margin-start ion-margin-end"
-                  routerLink={`/fines/${e.id}`}
-                >
-                  <IonCardHeader>
-                    <IonCardTitle className="ion-text-center">
-                      {e.eventName}
-                    </IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    <p className="ion-text-center">
-                      Date: <Moment format="MMM DD, YYYY">{e.date}</Moment>
-                    </p>
-                    {/* <IonButton id="fines-btn">Show fines</IonButton> */}
-                  </IonCardContent>
-                </IonCard>
-              </div>
-            ))}
+          {events.map((e, i) => (
+            <div key={i}>
+              <IonCard
+                className="ion-margin-start ion-margin-end"
+                routerLink={`/fines/${e.id}`}
+              >
+                <IonCardHeader>
+                  <IonCardTitle className="ion-text-center">
+                    {e.eventName}
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>
+                  <p className="ion-text-center">
+                    Date: <Moment format="MMM DD, YYYY">{e.date}</Moment>
+                  </p>
+                  {/* <IonButton id="fines-btn">Show fines</IonButton> */}
+                </IonCardContent>
+              </IonCard>
+            </div>
+          ))}
         </div>
       </IonContent>
     </IonPage>

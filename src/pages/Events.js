@@ -47,7 +47,7 @@ const Events = ({ events, setEvents, progress }) => {
         <div className="center-events">
           <IonList lines="none">
             <IonListHeader class="custom-background">
-              <IonTitle>Major Events</IonTitle>
+              <IonTitle>Events</IonTitle>
             </IonListHeader>
             {progress && (
               <div class="skel-text">
@@ -65,13 +65,11 @@ const Events = ({ events, setEvents, progress }) => {
                 </p>
               </div>
             )}
-            {events
-              .filter((e) => e.eventType === "major")
-              .map((eventInfo, i) => {
-                return <EventItem key={i} eventInfo={eventInfo} />;
-              })}
+            {events.map((eventInfo, i) => {
+              return <EventItem key={i} eventInfo={eventInfo} />;
+            })}
           </IonList>
-          <IonList lines="none">
+          {/* <IonList lines="none">
             <IonListHeader class="custom-background">
               <IonTitle>Minor Events</IonTitle>
             </IonListHeader>
@@ -96,7 +94,7 @@ const Events = ({ events, setEvents, progress }) => {
               .map((eventInfo, i) => {
                 return <EventItem key={i} eventInfo={eventInfo} />;
               })}
-          </IonList>
+          </IonList> */}
         </div>
       </IonContent>
       <IonFooter className="ion-no-border">

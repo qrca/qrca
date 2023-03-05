@@ -238,7 +238,7 @@ const calculateFines = (event) => {
   }
 
   students = event.studentLogs.map((s) => {
-    if (event.hasNoFines) {
+    if (event.hasNoFines === true) {
       return {
         ...s,
         fine: 0,
@@ -273,12 +273,15 @@ const calculateFines = (event) => {
           ? 50
           : 25
         : 0;
-    const wholeDay =
-      fine1 + fine2 + fine3 + fine4 >= 100
-        ? s.student.isOfficer
-          ? 200
-          : 100
-        : 0;
+    let wholeDay = 0;
+    if (
+      s.login1 === null &&
+      s.login2 === null &&
+      s.logout1 === null &&
+      s.logout2 === null
+    ) {
+      wholeDay = s.student.isOfficer ? 200 : 100;
+    }
     const fine = fine1 + fine2 + fine3 + fine4 + wholeDay;
 
     return {
