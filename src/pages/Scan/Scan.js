@@ -28,8 +28,9 @@ import axios from "axios";
 import "./Scan.css";
 import { useEffect, useState, useRef } from "react";
 
-const baseUrl = "https://qrca-api.onrender.com/api/events/";
+// const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
+const baseUrl = "http://localhost:3001/api/events";
 
 export default function Scan({ eventInfo }) {
   let { id } = useParams();
@@ -310,13 +311,13 @@ export default function Scan({ eventInfo }) {
 
           <div className="btn-margin">
             <IonButton
-              class="custom-ion-btn manual-input"
+              className="custom-ion-btn manual-input"
               id="open-modal"
               expand="block"
             >
               Manual Input
             </IonButton>
-            <IonButton class="custom-ion-btn" onClick={startScan}>
+            <IonButton className="custom-ion-btn" onClick={startScan}>
               Scan
             </IonButton>
           </div>
@@ -331,7 +332,7 @@ export default function Scan({ eventInfo }) {
       </div>
       <IonButton
         hidden={!hideBg}
-        class="custom-ion-btn stop-btn"
+        className="custom-ion-btn stop-btn"
         onClick={stopScan}
       >
         Stop

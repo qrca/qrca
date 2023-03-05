@@ -17,8 +17,9 @@ import { useHistory } from "react-router-dom";
 
 import "./AddEvent.css";
 
-const baseUrl = "https://qrca-api.onrender.com";
+// const baseUrl = "https://qrca-api.onrender.com";
 // const baseUrl = "http://192.168.1.9:3001";
+const baseUrl = "http://localhost:3001";
 
 const AddEvent = () => {
   let history = useHistory();
@@ -61,8 +62,8 @@ const AddEvent = () => {
 
   return (
     <IonPage>
-      <IonContent class="custom-add-event">
-        <IonList class="custom-list">
+      <IonContent className="custom-add-event">
+        <IonList className="custom-list">
           <h1>Add Event</h1>
           <IonItem>
             <IonSelect
@@ -152,17 +153,20 @@ const AddEvent = () => {
               onIonChange={(e: any) => setOutEnd2(e.target.value)}
             ></IonInput>
           </IonItem>
-          <IonItem class="ion-add-custom-button">
+          <IonItem className="ion-add-custom-button">
             {!submitP && (
               <IonButton
-                class="add-custom-button ion-padding ion-margin-bottom"
+                className="add-custom-button ion-padding ion-margin-bottom"
                 onClick={onSubmit}
               >
                 Submit
               </IonButton>
             )}
             {submitP && (
-              <IonSpinner name="circular" class="center-spinner"></IonSpinner>
+              <IonSpinner
+                name="circular"
+                className="center-spinner"
+              ></IonSpinner>
             )}
           </IonItem>
         </IonList>

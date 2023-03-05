@@ -48,6 +48,7 @@ const App: React.FC = () => {
 
   const baseUrl = "https://qrca-api.onrender.com";
   // const baseUrl = "http://192.168.1.9:3001";
+  // const baseUrl = "http://localhost:3001";
 
   useEffect(() => {
     const getEvents = async () => {
@@ -87,7 +88,7 @@ const App: React.FC = () => {
               />
             </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" class="custom-background">
+          <IonTabBar slot="bottom" className="custom-background">
             <IonTabButton href="/" tab="events">
               <IonIcon icon={calendar} />
               <IonLabel>Events</IonLabel>
