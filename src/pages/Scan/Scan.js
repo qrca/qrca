@@ -76,9 +76,6 @@ export default function Scan({ eventInfo }) {
     checkPermission();
   }, []);
 
-  // const updateStudent = async (student_id) => {
-  //   await axios.put();
-  // };
   const manualLog = (sId) => {
     setIsSending(true);
     const student = event.studentLogs.filter((s) => s.student._id === sId);

@@ -11,7 +11,7 @@ import {
   IonLabel,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import axios from "axios";
+import { getEvents } from "./services/event";
 
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Header from "./components/Header/Header";
@@ -46,20 +46,11 @@ const App: React.FC = () => {
   const [events, setEvents] = useState([]);
   const [progress, setProgress] = useState(true);
 
-  // const baseUrl = "https://qrca-api.onrender.com";
-  // const baseUrl = "http://192.168.1.9:3001";
-  const baseUrl = "http://localhost:3001";
-
   useEffect(() => {
-    const getEvents = async () => {
-      await axios.get(`${baseUrl}/api/events`).then((res) => {
-        setProgress(false);
-        setEvents(res.data);
-        console.log(res.data);
-      });
-    };
-
-    getEvents();
+    getEvents().then((res) => {
+      setProgress(false);
+      setEvents(res.data);
+    });
   }, []);
 
   return (

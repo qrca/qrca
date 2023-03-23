@@ -34,17 +34,6 @@ export default function Fines({ events }) {
   const [count, setCount] = useState(10);
   const students = calculateFines(event);
 
-  // useEffect(() => {
-  //   async function getEvent() {
-  //     const e = await axios.get(baseUrl + id);
-  //     setEvent(e.data);
-  //     console.log("===================");
-  //     console.log(e.data);
-  //   }
-
-  //   getEvent();
-  // }, [id]);
-
   const generateItems = () => {
     setCount((c) => c + 10);
   };

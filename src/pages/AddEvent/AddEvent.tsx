@@ -11,14 +11,14 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
-import axios from "axios";
+import { postEvent } from "../../services/event";
 import { useHistory } from "react-router-dom";
 
 import "./AddEvent.css";
 
 // const baseUrl = "https://qrca-api.onrender.com";
 // const baseUrl = "http://192.168.1.9:3001";
-const baseUrl = "http://localhost:3001";
+// const baseUrl = "http://localhost:3001";
 
 const AddEvent = () => {
   let history = useHistory();
@@ -53,7 +53,7 @@ const AddEvent = () => {
 
     // console.log(data);
 
-    await axios.post(`${baseUrl}/api/events`, data).then(() => {
+    postEvent(data).then(() => {
       setSubmitP(false);
       history.push("/");
     });

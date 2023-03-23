@@ -13,7 +13,7 @@ import {
   IonText,
 } from "@ionic/react";
 import { useState } from "react";
-import axios from "axios";
+import { getEvents } from "../../services/event";
 import Moment from "react-moment";
 
 import "./EventList.css";
@@ -25,21 +25,13 @@ export default function EventList({ events, setEvents }) {
 
   // const baseUrl = "https://qrca-api.onrender.com";
   // const baseUrl = "http://192.168.1.9:3001";
-  const baseUrl = "http://localhost:3001";
-
-  // useEffect(() => {
-  //   const getEvents = async () => {
-  //     const serverEvents = await axios.get(`${baseUrl}/api/events`);
-  //     setEvents(serverEvents.data);
-  //   };
-
-  //   getEvents();
-  // }, []);
+  // const baseUrl = "http://localhost:3001";
 
   const onRefresh = (e) => {
     setTimeout(async () => {
-      const serverEvents = await axios.get(baseUrl + "/api/events");
+      const serverEvents = await getEvents();
       setEvents(serverEvents.data);
+      console.log({ events, message: "EventsList.js" });
       e.detail.complete();
     }, 1000);
   };

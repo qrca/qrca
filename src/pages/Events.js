@@ -12,20 +12,16 @@ import {
 } from "@ionic/react";
 
 import EventItem from "../components/EventItem/EventItem";
-import axios from "axios";
+import { getEvents } from "../services/event";
 
 import "./Events.css";
-
-// const baseUrl = "https://qrca-api.onrender.com";
-// const baseUrl = "http://192.168.1.9:3001";
-const baseUrl = "http://localhost:3001";
 
 const Events = ({ events, setEvents, progress }) => {
   const onRefresh = (e) => {
     setTimeout(async () => {
-      const serverEvents = await axios.get(`${baseUrl}/api/events`);
+      const serverEvents = await getEvents();
       setEvents(serverEvents.data);
-      console.log(events);
+      console.log({ events, message: "Events.js" });
       e.detail.complete();
     }, 1000);
   };
