@@ -24,6 +24,7 @@ import Moment from "react-moment";
 import moment from "moment-timezone";
 import "moment-timezone";
 import axios from "axios";
+import useEventStore from "../../store/events";
 
 import "./Scan.css";
 import { useEffect, useState, useRef } from "react";
@@ -32,10 +33,11 @@ import { useEffect, useState, useRef } from "react";
 const baseUrl = "http://192.168.1.10:3001/api/events/";
 // const baseUrl = "http://localhost:3001/api/events";
 
-export default function Scan({ eventInfo }) {
+export default function Scan() {
   let { id } = useParams();
   const [isSending, setIsSending] = useState(false);
-  const event = eventInfo.filter((e) => e.id === id)[0];
+  const events = useEventStore((state) => state.events);
+  const event = events.filter((e) => e.id === id)[0];
 
   const [hideBg, setHideBg] = useState("");
   const [logCat, setLogCat] = useState("");

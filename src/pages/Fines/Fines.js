@@ -18,6 +18,7 @@ import {
   IonButton,
 } from "@ionic/react";
 
+import useEventStore from "../../store/events";
 import { useParams } from "react-router";
 import "./Fines.css";
 import Moment from "react-moment";
@@ -27,8 +28,9 @@ import { calculateFines } from "../../utils/utils";
 // const baseUrl = "http://192.168.1.9:3001/api/events/";
 // const baseUrl = "http://localhost:3001/api/events/";
 
-export default function Fines({ events }) {
+export default function Fines() {
   let { id } = useParams();
+  const events = useEventStore((state) => state.events);
   const event = events.filter((e) => e.id === id)[0];
 
   const [filter, setFilter] = useState("");

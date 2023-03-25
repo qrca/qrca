@@ -12,6 +12,7 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { getEvents } from "./services/event";
+import useEventStore from "./store/events";
 
 import AddEvent from "./pages/AddEvent/AddEvent";
 import Header from "./components/Header/Header";
@@ -44,7 +45,8 @@ import "./theme/variables.css";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [events, setEvents] = useState([]);
+  const setEvents = useEventStore((state) => state.setEvents);
+  // const [events, setEvents] = useState([]);
   const [progress, setProgress] = useState(true);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const App: React.FC = () => {
       setProgress(false);
       setEvents(res.data);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -61,23 +64,19 @@ const App: React.FC = () => {
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/fines/:id">
-              <Fines events={events} />
+              <Fines />
             </Route>
             <Route path="/event-list">
-              <EventList events={events} setEvents={setEvents} />
+              <EventList />
             </Route>
             <Route path="/scan/:id">
-              <Scan eventInfo={events} />
+              <Scan />
             </Route>
             <Route exact path="/add-event">
               <AddEvent />
             </Route>
             <Route exact path="/home">
-              <Events
-                events={events}
-                setEvents={setEvents}
-                progress={progress}
-              />
+              <Events progress={progress} />
             </Route>
             <Route path="/" exact>
               <Password />

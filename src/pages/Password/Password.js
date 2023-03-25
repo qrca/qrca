@@ -36,10 +36,10 @@ export default function Password() {
       if (res.status === 200) {
         history.push("/home");
       }
-    } catch {
+    } catch (error) {
       console.log("ahsdfhaldsf");
       present({
-        message: "Invalid credentials",
+        message: error.message,
         duration: 1500,
         position: "bottom",
       });

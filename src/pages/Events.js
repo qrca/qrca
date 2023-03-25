@@ -13,10 +13,13 @@ import {
 
 import EventItem from "../components/EventItem/EventItem";
 import { getEvents } from "../services/event";
+import useEventStore from "../store/events";
 
 import "./Events.css";
 
-const Events = ({ events, setEvents, progress }) => {
+const Events = ({ progress }) => {
+  const events = useEventStore((state) => state.events);
+  const setEvents = useEventStore((state) => state.setEvents);
   const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await getEvents();

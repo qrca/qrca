@@ -14,12 +14,15 @@ import {
 } from "@ionic/react";
 import { useState } from "react";
 import { getEvents } from "../../services/event";
+import useEventStore from "../../store/events";
 import Moment from "react-moment";
 
 import "./EventList.css";
 
-export default function EventList({ events, setEvents }) {
+export default function EventList() {
   const [showEventType, setEventType] = useState("major");
+  const events = useEventStore((state) => state.events);
+  const setEvents = useEventStore((state) => state.setEvents);
 
   // const [events, setEvents] = useState([]);
 
