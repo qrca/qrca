@@ -31,6 +31,9 @@ function truncateString(str, maxLength) {
 }
 
 export default function Fines() {
+  const downloadUrl = "https://qrca-api.onrender.com/api/download";
+  // const downloadUrl = "http://192.168.1.6:3001/api/events/";
+  // const downloadUrl = "http://localhost:3001/api/events";
   let { id } = useParams();
   const events = useEventStore((state) => state.events);
   const event = events.filter((e) => e.id === id)[0];
@@ -86,7 +89,7 @@ export default function Fines() {
         <div className="studentList">
           <IonList class="reposition-list">
             <IonButton
-              href={`http://192.168.1.9:3001/api/download/${id}`}
+              href={`${downloadUrl}/${id}`}
               download=""
               target="_blank"
               className="excel-button fines-button"

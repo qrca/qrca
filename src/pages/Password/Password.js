@@ -10,6 +10,7 @@ import {
   useIonToast,
   IonList,
   IonSelect,
+  IonSpinner,
   IonSelectOption,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
@@ -26,12 +27,14 @@ export default function Password() {
   const [pass, setPass] = useState("");
   const [officers, setOfficers] = useState([]);
   const [selected, setSelected] = useState("");
+  const [ping, setPing] = useState(false);
   const setScanner = useEventStore((state) => state.setScanner);
   const [present] = useIonToast();
   let history = useHistory();
 
   useEffect(() => {
     getOfficers().then((result) => {
+      setPing(true);
       const names = result.data.map((s) => s.name);
       names.sort((a, b) =>
         a.localeCompare(b, undefined, { sensitivity: "base" })
@@ -78,18 +81,26 @@ export default function Password() {
       <IonContent>
         <div className="pass-page">
           <IonList>
-            <IonItem>
-              <IonSelect
-                placeholder="Select officer"
-                onIonChange={(e) => setSelected(e.target.value)}
-              >
-                {officers.map((name, i) => (
-                  <IonSelectOption key={i} value={name}>
-                    {name}
-                  </IonSelectOption>
-                ))}
-              </IonSelect>
-            </IonItem>
+            {!ping && (
+              <IonSpinner
+                name="circular"
+                className="center-spinner"
+              ></IonSpinner>
+            )}
+            {ping && (
+              <IonItem>
+                <IonSelect
+                  placeholder="Select officer"
+                  onIonChange={(e) => setSelected(e.target.value)}
+                >
+                  {officers.map((name, i) => (
+                    <IonSelectOption key={i} value={name}>
+                      {name}
+                    </IonSelectOption>
+                  ))}
+                </IonSelect>
+              </IonItem>
+            )}
             <IonItem>
               <IonLabel position="fixed">Enter Password</IonLabel>
               <IonInput
