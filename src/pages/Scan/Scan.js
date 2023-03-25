@@ -30,13 +30,16 @@ import "./Scan.css";
 import { useEffect, useState, useRef } from "react";
 
 // const baseUrl = "https://qrca-api.onrender.com/api/events/";
-const baseUrl = "http://192.168.1.10:3001/api/events/";
+const baseUrl = "http://192.168.1.9:3001/api/events/";
 // const baseUrl = "http://localhost:3001/api/events";
 
 export default function Scan() {
   let { id } = useParams();
   const [isSending, setIsSending] = useState(false);
+
   const events = useEventStore((state) => state.events);
+  const scanner = useEventStore((state) => state.scanner);
+
   const event = events.filter((e) => e.id === id)[0];
 
   const [hideBg, setHideBg] = useState("");
@@ -95,6 +98,7 @@ export default function Scan() {
         const data = {
           studentId: sId,
           login1: logTime,
+          scanIn1: scanner,
         };
 
         axios.put(baseUrl + id, data).then(() => {
@@ -105,6 +109,7 @@ export default function Scan() {
         const data = {
           studentId: sId,
           login2: logTime,
+          scanIn2: scanner,
         };
         axios
           .put(baseUrl + id, data)
@@ -120,6 +125,7 @@ export default function Scan() {
         const data = {
           studentId: sId,
           logout1: logTime,
+          scanOut1: scanner,
         };
         axios
           .put(baseUrl + id, data)
@@ -135,6 +141,7 @@ export default function Scan() {
         const data = {
           studentId: sId,
           logout2: logTime,
+          scanOut2: scanner,
         };
         axios
           .put(baseUrl + id, data)

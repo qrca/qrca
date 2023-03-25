@@ -2,8 +2,88 @@ import moment from "moment";
 
 const calculateFines = (event) => {
   let students;
-  console.log(event.eventName === "CS GENERAL ASSEMBLY ");
   if (event.eventName === "CS GENERAL ASSEMBLY ") {
+    const prevOfficers = [
+      "2022-8-0030",
+      "2022-8-0009",
+      "2022-8-0018",
+      "2022-8-0011",
+      "2022-8-0310",
+      "2022-8-0045",
+      "2022-8-0017",
+      "2022-8-0218",
+      "2022-8-0056",
+      "2022-8-0131",
+      "2022-8-0080",
+      "2022-8-0328",
+      "2022-8-0148",
+      "2022-8-0193",
+      "2022-8-0149",
+      "2022-8-0293",
+      "2022-8-0299",
+      "2022-8-0271",
+      "2022-8-0241",
+      "2022-8-0125",
+      "2020-8-0155",
+      "2022-8-0027",
+      "2022-8-0234",
+      "2022-8-0113",
+      "2022-8-0108",
+      "2022-8-0214",
+      "2021-8-0235",
+      "2021-8-0251",
+      "2021-8-0220",
+      "2021-8-0418",
+      "2021-8-0009",
+      "2021-8-0010",
+      "2021-8-0136",
+      "2021-8-0012",
+      "2021-8-0232",
+      "2021-8-0157",
+      "2021-8-0159",
+      "2021-8-0224",
+      "2021-8-0267",
+      "2021-8-0187",
+      "2021-8-0167",
+      "2021-8-0280",
+      "2021-8-0195",
+      "2021-8-0383",
+      "2021-8-0165",
+      "2019-2-0289",
+      "2021-8-0371",
+      "2019-8-0341",
+      "2021-10-0222N",
+      "2020-8-0521",
+      "2021-8-0219",
+      "2020-8-0432",
+      "2020-8-0135",
+      "2020-8-0147",
+      "2020-8-0461",
+      "2020-8-0152",
+      "2020-8-0161",
+      "2020-8-0164",
+      "2020-8-0468",
+      "2020-8-0168",
+      "2020-8-0177",
+      "2020-8-0187",
+      "2020-8-0191",
+      "2020-8-0194",
+      "2020-8-0480",
+      "2019-8-0338",
+      "2020-8-0485",
+      "2020-8-0207",
+      "2020-8-0209",
+      "2019-8-0062",
+      "2019-8-0161",
+      "2018-4-0375",
+      "2019-8-0003",
+      "2019-8-0335",
+      "2019-8-0283",
+      "2018-4-0722",
+      "2019-8-0016",
+      "2019-8-0029",
+      "2018-4-0111",
+    ];
     students = event.studentLogs.map((s) => {
       let fine = 0;
       let fine1 = 0;
@@ -30,7 +110,7 @@ const calculateFines = (event) => {
         s.logout1 === null &&
         s.logout2 === null
       ) {
-        if (s.student.isOfficer) {
+        if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
           fine1 =
             event.in1 === null ? 0 : event.eventType === "minor" ? 50 : 70;
           fine2 =
@@ -74,7 +154,7 @@ const calculateFines = (event) => {
         if (event.in1 === null) {
           fine1 = 0;
         } else if (s.login1 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine1 += 70;
           } else {
             fine1 += 50;
@@ -86,10 +166,15 @@ const calculateFines = (event) => {
           if (minutesLate > 0) {
             fine1 += Math.min(
               Math.ceil(minutesLate / 15) * 5,
-              s.student.isOfficer ? 60 : 50
+              s.student.isOfficer || prevOfficers.includes(s.student._id)
+                ? 60
+                : 50
             );
 
-            if (s.student.isOfficer && minutesLate > 45) {
+            if (
+              (s.student.isOfficer || prevOfficers.includes(s.student._id)) &&
+              minutesLate > 45
+            ) {
               fine1 += 10;
             }
           }
@@ -97,7 +182,7 @@ const calculateFines = (event) => {
         if (event.in2 === null) {
           fine2 = 0;
         } else if (s.login2 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine2 += 70;
           } else {
             fine2 += 50;
@@ -109,9 +194,14 @@ const calculateFines = (event) => {
           if (minutesLate > 0) {
             fine2 += Math.min(
               Math.ceil(minutesLate / 15) * 5,
-              s.student.isOfficer ? 60 : 50
+              s.student.isOfficer || prevOfficers.includes(s.student._id)
+                ? 60
+                : 50
             );
-            if (s.student.isOfficer && minutesLate > 45) {
+            if (
+              (s.student.isOfficer || prevOfficers.includes(s.student._id)) &&
+              minutesLate > 45
+            ) {
               fine2 += 10;
             }
           }
@@ -120,7 +210,7 @@ const calculateFines = (event) => {
         if (event.out1 === null) {
           fine3 = 0;
         } else if (s.logout1 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine3 += 70;
           } else {
             fine3 += 50;
@@ -130,7 +220,7 @@ const calculateFines = (event) => {
         if (event.out2 === null) {
           fine4 = 0;
         } else if (s.logout2 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine4 += 70;
           } else {
             fine4 += 50;
@@ -140,7 +230,7 @@ const calculateFines = (event) => {
         if (event.in1 === null) {
           fine1 = 0;
         } else if (s.login1 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine1 += 50;
           } else {
             fine1 += 20;
@@ -152,9 +242,14 @@ const calculateFines = (event) => {
           if (minutesLate > 0) {
             fine1 += Math.min(
               Math.ceil(minutesLate / 12) * 2,
-              s.student.isOfficer ? 40 : 20
+              s.student.isOfficer || prevOfficers.includes(s.student._id)
+                ? 40
+                : 20
             );
-            if (s.student.isOfficer && minutesLate > 45) {
+            if (
+              (s.student.isOfficer || prevOfficers.includes(s.student._id)) &&
+              minutesLate > 45
+            ) {
               fine1 += 10;
             }
           }
@@ -162,7 +257,7 @@ const calculateFines = (event) => {
         if (event.in2 === null) {
           fine2 = 0;
         } else if (s.login2 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine2 += 50;
           } else {
             fine2 += 20;
@@ -174,9 +269,14 @@ const calculateFines = (event) => {
           if (minutesLate > 0) {
             fine2 += Math.min(
               Math.ceil(minutesLate / 12) * 2,
-              s.student.isOfficer ? 40 : 20
+              s.student.isOfficer || prevOfficers.includes(s.student._id)
+                ? 40
+                : 20
             );
-            if (s.student.isOfficer && minutesLate > 45) {
+            if (
+              (s.student.isOfficer || prevOfficers.includes(s.student._id)) &&
+              minutesLate > 45
+            ) {
               fine2 += 10;
             }
           }
@@ -185,7 +285,7 @@ const calculateFines = (event) => {
         if (event.out1 === null) {
           fine3 = 0;
         } else if (s.logout1 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine3 += 50;
           } else {
             fine3 += 20;
@@ -195,7 +295,7 @@ const calculateFines = (event) => {
         if (event.out2 === null) {
           fine4 = 0;
         } else if (s.logout2 === null) {
-          if (s.student.isOfficer) {
+          if (s.student.isOfficer || prevOfficers.includes(s.student._id)) {
             fine4 += 50;
           } else {
             fine4 += 20;
