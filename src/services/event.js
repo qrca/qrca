@@ -12,4 +12,10 @@ const postEvent = async (eventData) => {
   return await axios.post(`${baseUrl}/api/events`, eventData);
 };
 
-export { getEvents, postEvent };
+const excuseStudent = async (studentId, eventId) => {
+  return await axios.put(`${baseUrl}/api/events/excuse/${eventId}`, {
+    studentId,
+  });
+};
+
+export { getEvents, postEvent, excuseStudent };

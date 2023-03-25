@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import {
   IonPage,
   IonContent,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonSearchbar,
   IonAccordion,
   IonAccordionGroup,
   IonItem,
   IonLabel,
-  IonText,
   IonList,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonButton,
+  IonSpinner,
 } from "@ionic/react";
 
 import useEventStore from "../../store/events";
@@ -23,10 +20,15 @@ import { useParams } from "react-router";
 import "./Fines.css";
 import Moment from "react-moment";
 import { calculateFines } from "../../utils/utils";
+import { excuseStudent } from "../../services/event";
+import { getEvents } from "../../services/event";
 
-// const baseUrl = "https://qrca-api.onrender.com/api/events/";
-// const baseUrl = "http://192.168.1.9:3001/api/events/";
-// const baseUrl = "http://localhost:3001/api/events/";
+function truncateString(str, maxLength) {
+  if (str.length > maxLength) {
+    return str.substring(0, maxLength) + "...";
+  }
+  return str;
+}
 
 export default function Fines() {
   let { id } = useParams();
@@ -35,7 +37,9 @@ export default function Fines() {
 
   const [filter, setFilter] = useState("");
   const [count, setCount] = useState(10);
+  const [excuseProgress, setExcuseProgress] = useState(false);
   const students = calculateFines(event);
+  const setEvents = useEventStore((state) => state.setEvents);
 
   const generateItems = () => {
     setCount((c) => c + 10);
@@ -50,6 +54,23 @@ export default function Fines() {
       (s) => s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1
     )
     .slice(0, count);
+
+  const onExcuse = async (studentId) => {
+    setExcuseProgress(true);
+    console.log("excuse");
+    excuseStudent(studentId, id)
+      .then((res) => {
+        getEvents().then((res) => {
+          setEvents(res.data);
+        });
+        setExcuseProgress(false);
+        console.log(res);
+      })
+      .catch((err) => {
+        setExcuseProgress(false);
+        console.log(err);
+      });
+  };
 
   return (
     <IonPage>
@@ -73,16 +94,18 @@ export default function Fines() {
             </IonButton>
             {filteredStudents.map((s, i) => (
               <div key={i}>
-                <IonCard className="ion-margin-start ion-margin-end">
-                  <IonCardHeader>
-                    <IonCardTitle className="">{s.student.name}</IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>
-                    <IonAccordionGroup className="ion-margin-bottom">
-                      <IonAccordion>
-                        <IonItem slot="header">
-                          <IonLabel>Fine Breakdown</IonLabel>
-                        </IonItem>
+                <IonCardContent>
+                  <IonAccordionGroup className="ion-margin-bottom">
+                    <IonAccordion>
+                      <IonItem slot="header">
+                        <IonLabel>
+                          {truncateString(s.student.name, 20)} || Total Fines:{" "}
+                          {s.fine}
+                        </IonLabel>
+                        <br />
+                      </IonItem>
+
+                      {!s.isExcused && (
                         <div className="ion-padding" slot="content">
                           <p>
                             Morning Login:{" "}
@@ -93,6 +116,7 @@ export default function Fines() {
                               <Moment format="hh:mm a">{s.login1}</Moment>
                             )}
                           </p>
+                          <p>Scanned by: {s.scanIn1}</p>
                           <p>
                             Morning Logout:{" "}
                             {event.out1 !== null
@@ -102,6 +126,8 @@ export default function Fines() {
                               <Moment format="hh:mm a">{s.logout1}</Moment>
                             )}
                           </p>
+                          <p>Scanned by: {s.scanOut1}</p>
+
                           <p>
                             Afternoon Login:{" "}
                             {event.in2 !== null
@@ -111,6 +137,8 @@ export default function Fines() {
                               <Moment format="hh:mm a">{s.login2}</Moment>
                             )}
                           </p>
+                          <p>Scanned by: {s.scanIn2}</p>
+
                           <p>
                             Afternoon Logout:{" "}
                             {event.out2 !== null
@@ -120,13 +148,31 @@ export default function Fines() {
                               <Moment format="hh:mm a">{s.logout2}</Moment>
                             )}
                           </p>
+                          <p>Scanned by: {s.scanOut2}</p>
+
                           <p>Wholeday Absent fines:{s.wholeDay}</p>
+                          {!excuseProgress && (
+                            <IonButton onClick={() => onExcuse(s.student._id)}>
+                              Excuse student
+                            </IonButton>
+                          )}
+                          {excuseProgress && (
+                            <IonSpinner
+                              name="circular"
+                              className="center-spinner"
+                            ></IonSpinner>
+                          )}
                         </div>
-                      </IonAccordion>
-                    </IonAccordionGroup>
-                    <IonText>Total Fines: {s.fine}</IonText>
-                  </IonCardContent>
-                </IonCard>
+                      )}
+                      {s.isExcused && (
+                        <div className="ion-padding" slot="content">
+                          Student is excused
+                        </div>
+                      )}
+                      {/* <p>Student is excused</p> */}
+                    </IonAccordion>
+                  </IonAccordionGroup>
+                </IonCardContent>
               </div>
             ))}
           </IonList>

@@ -83,8 +83,10 @@ export default function Password() {
                 placeholder="Select officer"
                 onIonChange={(e) => setSelected(e.target.value)}
               >
-                {officers.map((name) => (
-                  <IonSelectOption value={name}>{name}</IonSelectOption>
+                {officers.map((name, i) => (
+                  <IonSelectOption key={i} value={name}>
+                    {name}
+                  </IonSelectOption>
                 ))}
               </IonSelect>
             </IonItem>

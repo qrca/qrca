@@ -338,7 +338,7 @@ const calculateFines = (event) => {
   }
 
   students = event.studentLogs.map((s) => {
-    if (event.hasNoFines === true) {
+    if (event.hasNoFines === true || s.isExcused) {
       return {
         ...s,
         fine: 0,
