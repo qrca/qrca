@@ -1,12 +1,61 @@
-.custom-background {
+.custom-background-event {
   --background: #1c1b1f;
   --border: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .center-events {
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 82px;
+  /* transform: translateY(-50%); */
+}
+
+.filter-buttons-container {
+  display: flex;
+  display: row;
+}
+
+.filter-button.active {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  transition: background-color 150ms linear;
+}
+
+.filter-button {
+  border-radius: 3px;
+  border: 1px white solid;
+  padding: 1em;
+  font-size: 1em;
+  margin: 0.5em 0.5em;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.title-event {
+  font-size: 2em;
+  margin-bottom: 2em;
+}
+
+/* .event-item {
+  background-color: transparent;
+  opacity: 0;
+  transition: 150ms opacity linear;
+}
+
+.event-item.active {
+  opacity: 1;
+}
+
+.my-element.inactive {
+  opacity: 0;
+} */
+
+.messageNoEvent {
+  font-size: 2em;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  margin-top: 2em;
 }
 
 ion-fab-button {

@@ -1,7 +1,6 @@
 import {
   IonContent,
   IonPage,
-  IonTitle,
   IonList,
   IonListHeader,
   IonFooter,
@@ -14,12 +13,16 @@ import {
 import EventItem from "../components/EventItem/EventItem";
 import { getEvents } from "../services/event";
 import useEventStore from "../store/events";
+import { useState, useRef, useEffect } from "react";
+import moment from "moment";
 
 import "./Events.css";
 
 const Events = ({ progress }) => {
   const events = useEventStore((state) => state.events);
   const setEvents = useEventStore((state) => state.setEvents);
+  const [filterEvent, setFilterEvent] = useState("Incoming");
+  const [isActive, setIsActive] = useState(false);
   const onRefresh = (e) => {
     setTimeout(async () => {
       const serverEvents = await getEvents();
@@ -29,9 +32,42 @@ const Events = ({ progress }) => {
     }, 1000);
   };
 
+  useEffect(() => {
+    setIsActive(true);
+  }, [filterEvent]);
+
+  const incoming = useRef(null);
+  const archive = useRef(null);
+
+  const onIncomingClick = (e) => {
+    e.target.classList.add("active");
+    archive.current.classList.remove("active");
+    setIsActive(false);
+    setFilterEvent("Incoming");
+  };
+
+  const onArchiveClick = (e) => {
+    e.target.classList.add("active");
+    incoming.current.classList.remove("active");
+    setIsActive(false);
+    setFilterEvent("Archive");
+  };
+
+  const filterEvents = events.filter((event) => {
+    if (filterEvent === "Incoming") {
+      console.log(moment().isBefore(moment(event.date)));
+      return moment().isBefore(moment(event.date));
+    } else {
+      console.log(moment(event.date).isBefore(moment()));
+      return moment(event.date).isBefore(moment());
+    }
+  });
+
+  console.log(filterEvents);
+
   return (
     <IonPage>
-      <IonContent fullscreen class="content-style">
+      <IonContent fullscreen className="content-style">
         <IonRefresher
           slot="fixed"
           pullFactor={0.5}
@@ -45,11 +81,27 @@ const Events = ({ progress }) => {
         </IonRefresher>
         <div className="center-events">
           <IonList lines="none">
-            <IonListHeader class="custom-background">
-              <IonTitle>Events</IonTitle>
+            <IonListHeader className="custom-background-event">
+              <div className="title-event">Events</div>
+              <div className="filter-buttons-container">
+                <div
+                  className="filter-button active"
+                  onClick={onIncomingClick}
+                  ref={incoming}
+                >
+                  Incoming
+                </div>
+                <div
+                  className="filter-button"
+                  onClick={onArchiveClick}
+                  ref={archive}
+                >
+                  Archived
+                </div>
+              </div>
             </IonListHeader>
             {progress && (
-              <div class="skel-text">
+              <div className="skel-text">
                 <p>
                   <IonSkeletonText
                     animated={true}
@@ -64,9 +116,23 @@ const Events = ({ progress }) => {
                 </p>
               </div>
             )}
-            {events.map((eventInfo, i) => {
-              return <EventItem key={i} eventInfo={eventInfo} />;
-            })}
+            {filterEvents.length !== 0 &&
+              filterEvents.map((eventInfo, i) => {
+                return (
+                  <div
+                    className={`event-item${
+                      isActive ? " active" : " inactive"
+                    }`}
+                  >
+                    <EventItem key={i} eventInfo={eventInfo} />
+                  </div>
+                );
+              })}
+            {!progress && filterEvents.length === 0 && (
+              <div className="messageNoEvent">
+                There are no events in this section.
+              </div>
+            )}
           </IonList>
           {/* <IonList lines="none">
             <IonListHeader class="custom-background">
