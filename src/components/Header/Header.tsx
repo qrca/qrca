@@ -4,7 +4,7 @@ import logo from "../../assets/acs_logo.png";
 
 const Header = () => {
   return (
-    <IonHeader className="ion-padding-bottom ion-no-border">
+    <IonHeader className="ion-padding-bottom ion-no-border" id="header-icon">
       <IonImg
         src={logo}
         alt={"ACS Logo"}

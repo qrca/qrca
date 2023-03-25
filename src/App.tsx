@@ -19,6 +19,7 @@ import Events from "./pages/Events";
 import Scan from "./pages/Scan/Scan";
 import EventList from "./pages/EventList/EventList";
 import Fines from "./pages/Fines/Fines";
+import Password from "./pages/Password/Password";
 import { calendar, cardOutline, addCircleOutline } from "ionicons/icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -71,16 +72,24 @@ const App: React.FC = () => {
             <Route exact path="/add-event">
               <AddEvent />
             </Route>
-            <Route exact path="/">
+            <Route exact path="/home">
               <Events
                 events={events}
                 setEvents={setEvents}
                 progress={progress}
               />
             </Route>
+            <Route path="/" exact>
+              <Password />
+            </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom" className="custom-background">
-            <IonTabButton href="/" tab="events">
+
+          <IonTabBar
+            slot="bottom"
+            className="custom-background"
+            id="app-tab-bar"
+          >
+            <IonTabButton href="/home" tab="events">
               <IonIcon icon={calendar} />
               <IonLabel>Events</IonLabel>
             </IonTabButton>
