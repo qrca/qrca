@@ -41,6 +41,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import "./App.css";
 
 setupIonicReact();
 
@@ -88,17 +89,25 @@ const App: React.FC = () => {
             className="custom-background"
             id="app-tab-bar"
           >
-            <IonTabButton href="/home" tab="events">
+            <IonTabButton className="tab-bar-custom" href="/home" tab="events">
               <IonIcon icon={calendar} />
               <IonLabel>Events</IonLabel>
             </IonTabButton>
 
-            <IonTabButton href="/event-list" tab="fines">
+            <IonTabButton
+              className="tab-bar-custom"
+              href="/event-list"
+              tab="fines"
+            >
               <IonIcon icon={cardOutline} aria-hidden="true" />
               <IonLabel>Fines</IonLabel>
             </IonTabButton>
 
-            <IonTabButton href="/add-event" tab="add">
+            <IonTabButton
+              className="tab-bar-custom"
+              href="/add-event"
+              tab="add"
+            >
               <IonIcon icon={addCircleOutline} aria-hidden="true" />
               <IonLabel>Add</IonLabel>
             </IonTabButton>

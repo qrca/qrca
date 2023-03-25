@@ -89,8 +89,10 @@ export default function Fines() {
               href={`http://192.168.1.9:3001/api/download/${id}`}
               download=""
               target="_blank"
+              className="excel-button fines-button"
+              fill="clear"
             >
-              test
+              Download Excel File
             </IonButton>
             {filteredStudents.map((s, i) => (
               <div key={i}>
@@ -152,7 +154,11 @@ export default function Fines() {
 
                           <p>Wholeday Absent fines:{s.wholeDay}</p>
                           {!excuseProgress && (
-                            <IonButton onClick={() => onExcuse(s.student._id)}>
+                            <IonButton
+                              onClick={() => onExcuse(s.student._id)}
+                              fill="clear"
+                              className="fines-button"
+                            >
                               Excuse student
                             </IonButton>
                           )}

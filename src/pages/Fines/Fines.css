@@ -19,3 +19,15 @@
   top: calc(50px + 2em);
   --color: rgba(255, 255, 255, 0.5);
 }
+
+.excel-button {
+  margin-left: 1em;
+  margin-bottom: calc(1em);
+}
+
+.fines-button {
+  background-color: transparent;
+  color: #a0eea7;
+  border: #82af86 1px solid;
+  border-radius: 3px;
+}
