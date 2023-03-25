@@ -15,6 +15,7 @@ import {
   IonList,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
+  IonButton,
 } from "@ionic/react";
 
 import { useParams } from "react-router";
@@ -61,6 +62,13 @@ export default function Fines({ events }) {
         ></IonSearchbar>
         <div className="studentList">
           <IonList class="reposition-list">
+            <IonButton
+              href={`http://192.168.1.9:3001/api/download/${id}`}
+              download=""
+              target="_blank"
+            >
+              test
+            </IonButton>
             {filteredStudents.map((s, i) => (
               <div key={i}>
                 <IonCard className="ion-margin-start ion-margin-end">

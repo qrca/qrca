@@ -29,8 +29,8 @@ import "./Scan.css";
 import { useEffect, useState, useRef } from "react";
 
 // const baseUrl = "https://qrca-api.onrender.com/api/events/";
-// const baseUrl = "http://192.168.1.9:3001/api/events/";
-const baseUrl = "http://localhost:3001/api/events";
+const baseUrl = "http://192.168.1.10:3001/api/events/";
+// const baseUrl = "http://localhost:3001/api/events";
 
 export default function Scan({ eventInfo }) {
   let { id } = useParams();
