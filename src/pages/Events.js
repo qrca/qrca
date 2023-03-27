@@ -63,7 +63,7 @@ const Events = ({ progress }) => {
     }
   });
 
-  console.log(filterEvents);
+  console.log(isActive);
 
   return (
     <IonPage>
