@@ -200,6 +200,7 @@ export default function Scan() {
           const data = {
             studentId,
             login1: logTime,
+            scanIn1: scanner,
           };
           console.log(baseUrl + id, data);
           axios.put(baseUrl + id, data).then(() => {
@@ -211,6 +212,7 @@ export default function Scan() {
           const data = {
             studentId,
             login2: logTime,
+            scanIn2: scanner,
           };
           console.log("hihih");
           axios.put(baseUrl + id, data).then(() => {
@@ -222,6 +224,7 @@ export default function Scan() {
           const data = {
             studentId,
             logout1: logTime,
+            scanOut1: scanner,
           };
           console.log(data);
           axios.put(baseUrl + id, data).then(() => {
@@ -233,6 +236,7 @@ export default function Scan() {
           const data = {
             studentId,
             logout2: logTime,
+            scanOut2: scanner,
           };
           console.log(data);
           axios.put(baseUrl + id, data).then(() => {
