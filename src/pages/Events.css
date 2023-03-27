@@ -5,6 +5,10 @@
   flex-direction: column;
 }
 
+.some-margin {
+  margin-bottom: 3em;
+}
+
 .center-events {
   position: relative;
   top: 82px;

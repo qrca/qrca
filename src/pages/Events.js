@@ -118,21 +118,14 @@ const Events = ({ progress }) => {
             )}
             {filterEvents.length !== 0 &&
               filterEvents.map((eventInfo, i) => {
-                return (
-                  <div
-                    className={`event-item${
-                      isActive ? " active" : " inactive"
-                    }`}
-                  >
-                    <EventItem key={i} eventInfo={eventInfo} />
-                  </div>
-                );
+                return <EventItem key={i} eventInfo={eventInfo} />;
               })}
             {!progress && filterEvents.length === 0 && (
               <div className="messageNoEvent">
                 There are no events in this section.
               </div>
             )}
+            <div className="some-margin"></div>
           </IonList>
           {/* <IonList lines="none">
             <IonListHeader class="custom-background">
