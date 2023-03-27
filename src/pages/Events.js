@@ -55,11 +55,13 @@ const Events = ({ progress }) => {
 
   const filterEvents = events.filter((event) => {
     if (filterEvent === "Incoming") {
-      console.log(moment().isBefore(moment(event.date)));
-      return moment().isBefore(moment(event.date));
+      return moment()
+        .startOf("day")
+        .isSameOrBefore(moment(event.date).startOf("day"));
     } else {
-      console.log(moment(event.date).isBefore(moment()));
-      return moment(event.date).isBefore(moment());
+      return moment(event.date)
+        .startOf("day")
+        .isBefore(moment().startOf("day"));
     }
   });
 
