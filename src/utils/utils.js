@@ -337,8 +337,13 @@ const calculateFines = (event) => {
     return students;
   }
 
+  const hets = ["2020-8-0461", "2020-8-0209", "2020-8-0194"];
   students = event.studentLogs.map((s) => {
-    if (event.hasNoFines === true || s.isExcused) {
+    if (
+      event.hasNoFines === true ||
+      s.isExcused ||
+      hets.includes(s.student._id)
+    ) {
       return {
         ...s,
         fine: 0,
@@ -373,16 +378,8 @@ const calculateFines = (event) => {
           ? 50
           : 25
         : 0;
-    let wholeDay = 0;
-    if (
-      s.login1 === null &&
-      s.login2 === null &&
-      s.logout1 === null &&
-      s.logout2 === null
-    ) {
-      wholeDay = s.student.isOfficer ? 200 : 100;
-    }
-    const fine = fine1 + fine2 + fine3 + fine4 + wholeDay;
+
+    const fine = fine1 + fine2 + fine3 + fine4;
 
     return {
       ...s,
@@ -391,7 +388,7 @@ const calculateFines = (event) => {
       fine2,
       fine3,
       fine4,
-      wholeDay,
+      wholeDay: 0,
     };
   });
 
