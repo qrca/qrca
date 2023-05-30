@@ -80,7 +80,7 @@ export default function Password() {
     <IonPage>
       <IonContent>
         <div className="pass-page">
-          <IonList>
+          <IonList className="pass-page-list">
             {!ping && (
               <IonSpinner
                 name="circular"
@@ -88,7 +88,7 @@ export default function Password() {
               ></IonSpinner>
             )}
             {ping && (
-              <IonItem>
+              <IonItem className="login-officer-select-list">
                 <IonSelect
                   placeholder="Select officer"
                   onIonChange={(e) => setSelected(e.target.value)}
@@ -109,7 +109,7 @@ export default function Password() {
                 onIonChange={(e) => setPass(e.target.value)}
               ></IonInput>
             </IonItem>
-            <IonButton expand="block" onClick={onLogin}>
+            <IonButton expand="block" onClick={onLogin} className="login-btn">
               Submit
             </IonButton>
           </IonList>
