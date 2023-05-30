@@ -15,6 +15,8 @@ import {
   IonSpinner,
 } from "@ionic/react";
 
+import ExportAttendance from "../../components/Export/Export";
+
 import useEventStore from "../../store/events";
 import { useParams } from "react-router";
 import "./Fines.css";
@@ -31,7 +33,7 @@ function truncateString(str, maxLength) {
 }
 
 export default function Fines() {
-  const downloadUrl = "https://qrca-api.onrender.com/api/download";
+  // const downloadUrl = "https://qrca-api.onrender.com/api/download";
   // const downloadUrl = "http://192.168.1.6:3001/api/events/";
   // const downloadUrl = "http://localhost:3001/api/events";
   let { id } = useParams();
@@ -51,7 +53,7 @@ export default function Fines() {
   if (event.length === 0) {
     return <></>;
   }
-  console.log({ students });
+  // console.log({ students });
   const filteredStudents = students
     .filter(
       (s) => s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1
@@ -88,7 +90,8 @@ export default function Fines() {
         ></IonSearchbar>
         <div className="studentList">
           <IonList class="reposition-list">
-            <IonButton
+            <ExportAttendance event={event} />
+            {/* <IonButton
               href={`${downloadUrl}/${id}`}
               download=""
               target="_blank"
@@ -96,7 +99,7 @@ export default function Fines() {
               fill="clear"
             >
               Download Excel File
-            </IonButton>
+            </IonButton> */}
             {filteredStudents.map((s, i) => (
               <div key={i}>
                 <IonCardContent>
@@ -155,7 +158,7 @@ export default function Fines() {
                           </p>
                           <p>Scanned by: {s.scanOut2}</p>
 
-                          <p>Wholeday Absent fines:{s.wholeDay}</p>
+                          {/* <p>Wholeday Absent fines:{s.wholeDay}</p> */}
                           {!excuseProgress && (
                             <IonButton
                               onClick={() => onExcuse(s.student._id)}
