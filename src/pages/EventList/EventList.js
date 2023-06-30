@@ -72,10 +72,7 @@ export default function EventList() {
         </IonRefresher>
         <IonSegment value={showEventType} onIonChange={(e) => test_func(e)}>
           <IonSegmentButton value="major">
-            <IonLabel>Major</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="minor">
-            <IonLabel>Minor</IonLabel>
+            <IonLabel>Events</IonLabel>
           </IonSegmentButton>
         </IonSegment>
         <div className="ion-margin-top">

@@ -1,9 +1,61 @@
 import React from "react";
 import * as XLSX from "xlsx";
 import write_blob from "capacitor-blob-writer";
+import { useIonToast } from "@ionic/react";
 
 import { exportTimes } from "../../utils/utils";
 import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
+import { Capacitor, registerPlugin } from "@capacitor/core";
+
+function array_buffer_to_base64(buffer) {
+  return window.btoa(
+    Array.from(new Uint8Array(buffer))
+      .map(function (byte) {
+        return String.fromCharCode(byte);
+      })
+      .join("")
+  );
+}
+
+function write_file_via_bridge({ path, directory, blob, recursive }) {
+  // Firstly, create or truncate the file.
+
+  return Filesystem.writeFile({
+    directory,
+    path,
+    recursive,
+    data: "",
+  }).then(function consume_blob() {
+    // Now write the file incrementally so that we do not exhaust our memory in
+    // attempting to Base64 encode the entire Blob at once.
+
+    if (blob.size === 0) {
+      return Promise.resolve();
+    }
+
+    // By choosing a chunk size which is a multiple of 3, we avoid a bug in
+    // Filesystem.appendFile, only on the web platform, which corrupts files by
+    // inserting Base64 padding characters within the file. See
+    // https://github.com/ionic-team/capacitor-plugins/issues/649.
+
+    const chunk_size = 3 * 128 * 1024;
+    const chunk_blob = blob.slice(0, chunk_size);
+    blob = blob.slice(chunk_size);
+
+    // Read the Blob as an ArrayBuffer, then append it to the file on disk.
+
+    return new Response(chunk_blob)
+      .arrayBuffer()
+      .then(function append_chunk_to_file(buffer) {
+        return Filesystem.appendFile({
+          directory,
+          path,
+          data: array_buffer_to_base64(buffer),
+        });
+      })
+      .then(consume_blob);
+  });
+}
 
 const ExportAttendance = ({ event }) => {
   const data = [
@@ -32,7 +84,7 @@ const ExportAttendance = ({ event }) => {
     [1, "John Doe", "8:00 AM", "12:00 PM", "1:00 PM", "5:00 PM", "250"],
     [2, "John Does", "8:00 AM", "12:00 PM", "1:00 PM", "5:00 PM", "250"],
   ];
-
+  const [present] = useIonToast();
   const exportToExcel = async () => {
     console.log("hiadhif");
     const headers = [
@@ -84,19 +136,41 @@ const ExportAttendance = ({ event }) => {
       type: EXCEL_TYPE,
     });
 
-    const fileName = `backup/${event.eventName}.xlsx`;
+    const fileName = `${event.eventName}.xlsx`;
     const fileDirectory = Directory.Documents;
+
+    // write_file_via_bridge({
+    //   path: fileName,
+    //   directory: fileDirectory,
+    //   blob: blob,
+    //   recursive: true,
+    // }).then(function () {
+    //   present({
+    //     message: "File written to Directory.Documents",
+    //     duration: 1500,
+    //     position: "bottom",
+    //   });
+    // });
 
     write_blob({
       path: fileName,
       directory: fileDirectory,
       blob: blob,
-      recursive: true,
       on_fallback(error) {
-        console.error(error);
+        console.log(error);
+        present({
+          message: "Internal Server Error. Please restart.",
+          duration: 1500,
+          position: "bottom",
+        });
       },
     }).then(function () {
-      console.log("file written.");
+      console.log("File Written.");
+      present({
+        message: "File written to Directory.Documents",
+        duration: 1500,
+        position: "bottom",
+      });
     });
   };
   const writeSecretFile = async () => {

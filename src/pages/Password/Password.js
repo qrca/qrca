@@ -11,9 +11,11 @@ import {
   IonList,
   IonSelect,
   IonSpinner,
+  IonText,
   IonSelectOption,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { hideTabBar, showTabBar } from "../../utils/tabs";
 import { login } from "../../services/login";
@@ -22,6 +24,11 @@ import { getOfficers } from "../../services/student";
 
 import "./Password.css";
 import useEventStore from "../../store/events";
+
+const variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
 
 export default function Password() {
   const [pass, setPass] = useState("");
@@ -80,38 +87,81 @@ export default function Password() {
     <IonPage>
       <IonContent>
         <div className="pass-page">
-          <IonList className="pass-page-list">
-            {!ping && (
-              <IonSpinner
-                name="circular"
-                className="center-spinner"
-              ></IonSpinner>
-            )}
-            {ping && (
-              <IonItem className="login-officer-select-list">
-                <IonSelect
-                  placeholder="Select officer"
-                  onIonChange={(e) => setSelected(e.target.value)}
+          <IonList className="pos-rel">
+            <AnimatePresence>
+              {!ping && (
+                <motion.div
+                  key="loading"
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  variants={variants}
+                  transition={{
+                    ease: "linear",
+                    duration: 1,
+                  }}
+                  className="login-loading"
                 >
-                  {officers.map((name, i) => (
-                    <IonSelectOption key={i} value={name}>
-                      {name}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              </IonItem>
-            )}
-            <IonItem>
-              <IonLabel position="fixed">Enter Password</IonLabel>
-              <IonInput
-                type="password"
-                value={pass}
-                onIonChange={(e) => setPass(e.target.value)}
-              ></IonInput>
-            </IonItem>
-            <IonButton expand="block" onClick={onLogin} className="login-btn">
-              Submit
-            </IonButton>
+                  <IonSpinner
+                    name="circular"
+                    className="center-spinner"
+                  ></IonSpinner>
+                  <IonText className="login-tip">
+                    Cold starting the server...
+                  </IonText>
+                  <IonText className="login-tip">
+                    This may take 2-5 minutes
+                  </IonText>
+                  <IonText className="login-tip">
+                    Consider restarting if login screen doesn't show after 5
+                    minutes.
+                  </IonText>
+                </motion.div>
+              )}
+              {ping && (
+                <motion.div
+                  key="login"
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  variants={variants}
+                  transition={{
+                    ease: "linear",
+                    duration: 1,
+                    delay: 1,
+                  }}
+                  className="pass-page-list"
+                >
+                  <IonItem className="login-officer-select-list ">
+                    <IonSelect
+                      placeholder="Select officer"
+                      onIonChange={(e) => setSelected(e.target.value)}
+                    >
+                      {officers.map((name, i) => (
+                        <IonSelectOption key={i} value={name}>
+                          {name}
+                        </IonSelectOption>
+                      ))}
+                    </IonSelect>
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="fixed">Enter Password</IonLabel>
+                    <IonInput
+                      type="password"
+                      value={pass}
+                      onIonChange={(e) => setPass(e.target.value)}
+                    ></IonInput>
+                  </IonItem>
+                  <IonButton
+                    expand="block"
+                    onClick={onLogin}
+                    className="login-btn"
+                  >
+                    Submit
+                  </IonButton>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </IonList>
         </div>
       </IonContent>
