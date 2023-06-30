@@ -109,7 +109,7 @@ const ExportAttendance = ({ event }) => {
       on_fallback(error) {
         console.log(error);
         present({
-          message: "Internal Server Error. Please restart.",
+          message: "Internal Server Error. File might be existing already.",
           duration: 1500,
           position: "bottom",
         });
