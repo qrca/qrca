@@ -29,19 +29,29 @@ import useEventStore from "../../store/events";
 import "./Scan.css";
 import { useEffect, useState, useRef } from "react";
 
-const baseUrl = "https://qrca-api.onrender.com/api/events/";
 // const baseUrl = "http://192.168.1.6:3001/api/events/";
-// const baseUrl = "http://localhost:3001/api/events";
+const baseUrl = "http://localhost:3001/api/events";
 
 export default function Scan() {
   let { id } = useParams();
+
+  /**
+   * Mainly for visual purposes, no use in actual data manipulation
+   */
   const [isSending, setIsSending] = useState(false);
 
+  /**
+   * Event store, check the "store" directory for implementation.
+   * Returns different states inside the store
+   */
   const events = useEventStore((state) => state.events);
   const scanner = useEventStore((state) => state.scanner);
 
   const event = events.filter((e) => e.id === id)[0];
 
+  /**
+   * Mainly for visual purposes (present, hideBg, logCat), no use in actual data manipulation
+   */
   const [hideBg, setHideBg] = useState("");
   const [logCat, setLogCat] = useState("");
   const [present] = useIonToast();
@@ -49,6 +59,9 @@ export default function Scan() {
   const modal = useRef(null);
   const input = useRef(null);
 
+  /**
+   * Used in input validation, reminds the user to select a timeframe for an event in the Scan page
+   */
   const presentToast = (
     student,
     message = "Please select a timeframe to log first."
@@ -68,6 +81,10 @@ export default function Scan() {
     }
   };
 
+  /**
+   * Checks for permission within the phone
+   * If not permitted, QR Scanner will not be opened.
+   */
   useEffect(() => {
     const checkPermission = async () => {
       const status = await BarcodeScanner.checkPermission({ force: true });
@@ -81,6 +98,12 @@ export default function Scan() {
     checkPermission();
   }, []);
 
+  /**
+   * Manual Login for students with no QR Code
+   * Note: `should not be used in controller`
+   * @param sId - Student ID (20XX-X-XXXX)
+   * @returns none
+   */
   const manualLog = (sId) => {
     setIsSending(true);
     const student = event.studentLogs.filter((s) => s.student._id === sId);
@@ -158,6 +181,20 @@ export default function Scan() {
   };
 
   const startScan = async () => {
+    /**
+     * Dear future me:
+     * I have spent lots of time tweaking the shit out of this abomination of a code
+     * to make sure it works on "most" devices. The rabbit hole that I have dived deep
+     * on left a scar in my heart that will never be healed, hence why I recommend you to
+     * turn your back and leave immediately in order to save yourself from the trauma that
+     * I have experienced. However, if you ever feel brave on tackling this problem that
+     * the dumb past you has forsaken, please feel free to do so. In the event that you
+     * are unable to fix it, please increment the counter below to remind the future us
+     * that it will be an arduous task to try and cover all test cases. I wish you good luck
+     * in your useless endeavors:
+     * Hours wasted: 25
+     */
+
     // Check camera permission
     const status = await BarcodeScanner.checkPermission({ force: true });
     if (status.denied) {

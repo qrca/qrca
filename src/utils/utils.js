@@ -1,5 +1,12 @@
 import moment from "moment";
 
+/**
+ * Fn: Calculates Fines
+ * Note: `should not be used in controller`
+ * @param event, an array type from the server API returned by the `event service`
+ * @returns Student object with additional attributes for fines
+ */
+
 const calculateFines = (event) => {
   let students;
   if (event.eventName === "CS GENERAL ASSEMBLY ") {
@@ -393,6 +400,13 @@ const calculateFines = (event) => {
   // console.log({ students, message: "utils.js" });
   return students;
 };
+
+/**
+ * Fn: Export times
+ * Note: `should not be used in controller`
+ * @param event, an array type from the server API returned by the `event service`
+ * @returns response object from server, status 401 is unauthorized, status 200 implies correct credentials
+ */
 
 const exportTimes = (event) => {
   let students;

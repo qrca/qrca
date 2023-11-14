@@ -1,6 +1,13 @@
 import { IonText, IonButton } from "@ionic/react";
 import "./EventItem.css";
 
+/**
+ * Note: `Used for rendering fines of students`
+ * @component
+ * @param eventInfo, a singular item in the array returned by the `event service`
+ * Check `service` folder for implementation
+ */
+
 const EventItem = ({ eventInfo }: { eventInfo: any }) => {
   return (
     <div className="item-style">

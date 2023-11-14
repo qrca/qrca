@@ -47,7 +47,6 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const setEvents = useEventStore((state) => state.setEvents);
-  // const [events, setEvents] = useState([]);
   const [progress, setProgress] = useState(true);
 
   useEffect(() => {

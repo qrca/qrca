@@ -20,15 +20,18 @@ import Moment from "react-moment";
 import "./EventList.css";
 
 export default function EventList() {
+  /**
+   * showEventType
+   * Mainly for visual purposes, serves no purpose in data manipulation
+   */
   const [showEventType, setEventType] = useState("major");
+
+  /**
+   * Set Scanner / Events state
+   * Check "store" directory for implementation
+   */
   const events = useEventStore((state) => state.events);
   const setEvents = useEventStore((state) => state.setEvents);
-
-  // const [events, setEvents] = useState([]);
-
-  // const baseUrl = "https://qrca-api.onrender.com";
-  // const baseUrl = "http://192.168.1.9:3001";
-  // const baseUrl = "http://localhost:3001";
 
   const onRefresh = (e) => {
     setTimeout(async () => {

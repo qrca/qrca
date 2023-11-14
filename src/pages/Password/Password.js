@@ -31,14 +31,27 @@ const variants = {
 };
 
 export default function Password() {
+  /**
+   * useState - state handlers
+   * Used for handling state in the form
+   */
   const [pass, setPass] = useState("");
   const [officers, setOfficers] = useState([]);
   const [selected, setSelected] = useState("");
   const [ping, setPing] = useState(false);
-  const setScanner = useEventStore((state) => state.setScanner);
   const [present] = useIonToast();
   let history = useHistory();
 
+  /**
+   * Set Scanner
+   * Check "store" directory for implementation
+   */
+  const setScanner = useEventStore((state) => state.setScanner);
+
+  /**
+   * Async Use Effect
+   * Fetches list of officers for list
+   */
   useEffect(() => {
     getOfficers().then((result) => {
       setPing(true);
@@ -50,6 +63,10 @@ export default function Password() {
     });
   }, []);
 
+  /**
+   * useIonViewDidEnter/Leave
+   * Mainly for visual purposes, serves no purpose in data manipulation
+   */
   useIonViewDidEnter(() => {
     hideTabBar();
   });
@@ -58,6 +75,12 @@ export default function Password() {
     showTabBar();
   });
 
+  /**
+   * Login Service
+   * Note: `Just invoke immediately. Assuming nothing changes in state handlers above, it will work.`
+   * @param None
+   * @returns none
+   */
   const onLogin = async () => {
     if (selected === "") {
       present({

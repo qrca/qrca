@@ -5,7 +5,6 @@ import { useIonToast } from "@ionic/react";
 
 import { exportTimes } from "../../utils/utils";
 import { Directory } from "@capacitor/filesystem";
-import { Capacitor } from "@capacitor/core";
 
 const ExportAttendance = ({ event }) => {
   const data = [

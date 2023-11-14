@@ -33,27 +33,50 @@ function truncateString(str, maxLength) {
 }
 
 export default function Fines() {
-  // const downloadUrl = "https://qrca-api.onrender.com/api/download";
-  // const downloadUrl = "http://192.168.1.6:3001/api/events/";
-  // const downloadUrl = "http://localhost:3001/api/events";
   let { id } = useParams();
   const events = useEventStore((state) => state.events);
   const event = events.filter((e) => e.id === id)[0];
 
+  /**
+   * useState - state handlers
+   * Mainly for visuals, serves no purpose in data manipulation/rendering
+   */
   const [filter, setFilter] = useState("");
   const [count, setCount] = useState(10);
   const [excuseProgress, setExcuseProgress] = useState(false);
+
+  /**
+   * Fn: Calculates Fines
+   * Note: `Used for rendering fines of students`
+   * @param event, an array type from the server API returned by the `event service`
+   * @returns Student object with additional attributes for fines
+   */
   const students = calculateFines(event);
+
+  /**
+   * Set Scanner
+   * Check "store" directory for implementation
+   */
   const setEvents = useEventStore((state) => state.setEvents);
 
+  /**
+   * Generate Items
+   * Limits the amount of students displayed on screen
+   * Change addCountOfStudents to change number of students displayed
+   */
   const generateItems = () => {
-    setCount((c) => c + 10);
+    const addCountOfStudents = 10;
+    setCount((c) => c + addCountOfStudents);
   };
 
   if (event.length === 0) {
     return <></>;
   }
-  // console.log({ students });
+
+  /**
+   * Filter students/ onExcuse Fn
+   * Mainly for visuals, serves no purpose in data manipulation/rendering
+   */
   const filteredStudents = students
     .filter(
       (s) => s.student.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1

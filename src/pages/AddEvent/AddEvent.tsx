@@ -16,12 +16,16 @@ import { useHistory } from "react-router-dom";
 
 import "./AddEvent.css";
 
-// const baseUrl = "https://qrca-api.onrender.com";
 // const baseUrl = "http://192.168.1.9:3001";
 // const baseUrl = "http://localhost:3001";
 
 const AddEvent = () => {
   let history = useHistory();
+
+  /**
+   * useState - state handlers
+   * Used for handling state in the form
+   */
   const [submitP, setSubmitP] = useState(false);
   const [in1, setIn1] = useState(null);
   const [inEnd1, setInEnd1] = useState(null);
@@ -50,8 +54,6 @@ const AddEvent = () => {
       out2: out2 !== null ? date + "T" + out2 + ":00+08:00" : null,
       outEnd2: outEnd2 !== null ? date + "T" + outEnd2 + ":00+08:00" : null,
     };
-
-    // console.log(data);
 
     postEvent(data).then(() => {
       setSubmitP(false);
