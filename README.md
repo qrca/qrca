@@ -28,7 +28,7 @@ Both frontend and backend are using JavaScript.
 ├───src
     ├───assets
     ├───components
-    ├───pages
+    ├───pages (Each page has comments explaining various functions)
     ├───services (Gets data from the backend)
     ├───store
     ├───theme
