@@ -60,7 +60,9 @@ Folders and files explanation:
 #### Stack
 
 _Ionic React_ - native React Version of the [Ionic Framework](https://ionicframework.com/docs)
+
 _Zustand_ - Global State Manager [Zustand](https://github.com/pmndrs/zustand)
+
 _Axios_ - [HTTP client for node.js](https://axios-http.com/docs/intro)
 
 ### Backend
