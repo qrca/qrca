@@ -1,6 +1,6 @@
-# Kaichou Graduation Project
+# QRCA
 
-The Kaichou Project is a graduation tribute website for the VTuber [Kiryu Coco](https://www.youtube.com/channel/UCS9uQI-jC3DE0L4IpXyvr6w).
+Frontend for the mobile app QRCA.
 
 ## Setup
 
