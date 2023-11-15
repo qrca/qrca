@@ -38,6 +38,12 @@ export default function Password() {
   const [pass, setPass] = useState("");
   const [officers, setOfficers] = useState([]);
   const [selected, setSelected] = useState("");
+
+  /**
+   * Ping
+   * Used for showing the loading screen to wait for the cold start of the server
+   * NOTE: Set to true if debugging
+   */
   const [ping, setPing] = useState(false);
   const [present] = useIonToast();
   let history = useHistory();
